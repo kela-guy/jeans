@@ -33,10 +33,12 @@ export function SwitchIllustration() {
     const rect = el.getBoundingClientRect()
     const windowH = window.innerHeight
 
+    // Start when element top hits 80% of viewport (20% from top)
+    // End when element top hits 40% of viewport -- still well in view
     const startThreshold = windowH * 0.8
-    const endThreshold = windowH * 0.2
+    const endThreshold = windowH * 0.4
 
-    const totalRange = startThreshold - endThreshold + rect.height
+    const totalRange = startThreshold - endThreshold
     const scrolled = startThreshold - rect.top
 
     const raw = scrolled / totalRange
