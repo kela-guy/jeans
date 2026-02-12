@@ -20,7 +20,7 @@ export function SolutionSection() {
       </p>
 
       <h2 className="mt-3 text-3xl font-black text-foreground md:text-4xl">
-        {"הפתרון היחיד!"}
+        {"\u05D4\u05E4\u05EA\u05E8\u05D5\u05DF \u05D4\u05D9\u05D7\u05D9\u05D3!"}
       </h2>
 
       <p className="mt-8 text-xl font-bold text-foreground">

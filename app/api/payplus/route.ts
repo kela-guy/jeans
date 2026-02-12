@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server"
 export async function POST(req: NextRequest) {
   try {
     const { name, email, phone } = await req.json()
+    const origin = req.nextUrl.origin
 
     if (!name || !email || !phone) {
       return NextResponse.json(
@@ -43,6 +44,8 @@ export async function POST(req: NextRequest) {
           },
           sendEmailApproval: true,
           sendEmailFailure: true,
+          refURL_success: `${origin}/payment/success`,
+          refURL_failure: `${origin}/payment/failure`,
         }),
       }
     )
