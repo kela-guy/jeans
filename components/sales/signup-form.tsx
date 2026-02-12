@@ -11,7 +11,7 @@ export function SignupForm() {
 
   return (
     <section className="flex flex-col gap-8 py-16" id="signup">
-      <h2 className="text-center font-serif text-3xl font-bold text-foreground md:text-4xl">
+      <h2 className="text-center font-sans text-3xl font-bold text-foreground md:text-4xl">
         {"טופס הרשמה"}
       </h2>
 

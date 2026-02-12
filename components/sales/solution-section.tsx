@@ -15,7 +15,7 @@ export function SolutionSection() {
     <section className="flex flex-col gap-12 py-16">
       {/* The only solution */}
       <div className="flex flex-col gap-6">
-        <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl">
+        <h2 className="font-sans text-3xl font-bold text-foreground md:text-4xl">
           {"הפתרון היחיד!"}
         </h2>
         <div className="flex flex-col gap-3 text-lg leading-relaxed text-foreground">
@@ -34,7 +34,7 @@ export function SolutionSection() {
 
       {/* What is the switch */}
       <div className="flex flex-col gap-6">
-        <h3 className="font-serif text-2xl font-bold text-foreground md:text-3xl">
+        <h3 className="font-sans text-2xl font-bold text-foreground md:text-3xl">
           {"מהו מתג שריפת השומן?"}
         </h3>
         <div className="flex flex-col gap-3 text-lg leading-relaxed text-foreground">
@@ -50,7 +50,7 @@ export function SolutionSection() {
         {/* Switch off vs on */}
         <div className="flex flex-col gap-6 md:flex-row md:gap-8">
           <div className="flex-1 rounded border border-border bg-muted p-6">
-            <p className="mb-3 font-serif text-lg font-bold text-foreground">
+            <p className="mb-3 font-sans text-lg font-bold text-foreground">
               {"כשהמתג כבוי"}
             </p>
             <p className="text-sm text-muted-foreground">
@@ -61,7 +61,7 @@ export function SolutionSection() {
             </p>
           </div>
           <div className="flex-1 rounded border-2 border-foreground bg-foreground p-6">
-            <p className="mb-3 font-serif text-lg font-bold text-primary-foreground">
+            <p className="mb-3 font-sans text-lg font-bold text-primary-foreground">
               {"כשהמתג פעיל"}
             </p>
             <p className="text-sm text-primary-foreground/70">
@@ -79,7 +79,7 @@ export function SolutionSection() {
 
       {/* Benefits when switch is on */}
       <div className="flex flex-col gap-6">
-        <h3 className="font-serif text-2xl font-bold text-foreground md:text-3xl">
+        <h3 className="font-sans text-2xl font-bold text-foreground md:text-3xl">
           {"ברגע שתדליקי את המתג"}
         </h3>
         <ul className="flex flex-col gap-3">

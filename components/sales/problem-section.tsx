@@ -3,10 +3,10 @@ export function ProblemSection() {
     <section className="flex flex-col gap-12 py-16">
       {/* Painful truth */}
       <div className="flex flex-col gap-6">
-        <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl">
+        <h2 className="font-sans text-3xl font-bold text-foreground md:text-4xl">
           {"האמת הכואבת:"}
         </h2>
-        <h3 className="font-serif text-xl font-bold leading-relaxed text-foreground md:text-2xl text-balance">
+        <h3 className="font-sans text-xl font-bold leading-relaxed text-foreground md:text-2xl text-balance">
           {"ככל שאת ״מקפידה״ יותר, כך את מתרחקת מבטן שטוחה"}
         </h3>
         <div className="flex flex-col gap-4 text-lg leading-relaxed text-foreground">

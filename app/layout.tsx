@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import { Assistant, Frank_Ruhl_Libre } from 'next/font/google'
+import { Rubik } from 'next/font/google'
 
 import './globals.css'
 
-const _assistant = Assistant({ subsets: ['hebrew', 'latin'], variable: '--font-assistant' })
-const _frankRuhl = Frank_Ruhl_Libre({ subsets: ['hebrew', 'latin'], variable: '--font-frank', weight: ['400', '500', '700', '900'] })
+const _rubik = Rubik({ subsets: ['hebrew', 'latin'], variable: '--font-rubik', weight: ['300', '400', '500', '600', '700', '800', '900'] })
 
 export const metadata: Metadata = {
   title: 'הורידי 2 מידות בג׳ינס תוך 21 יום | אביב',
@@ -18,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="he" dir="rtl">
-      <body className={`${_assistant.variable} ${_frankRuhl.variable} font-sans antialiased`}>{children}</body>
+      <body className={`${_rubik.variable} font-sans antialiased`}>{children}</body>
     </html>
   )
 }

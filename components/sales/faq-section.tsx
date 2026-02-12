@@ -31,7 +31,7 @@ export function FaqSection() {
 
   return (
     <section className="flex flex-col gap-8 py-16">
-      <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl">
+      <h2 className="font-sans text-3xl font-bold text-foreground md:text-4xl">
         {"שאלות ותשובות"}
       </h2>
 

@@ -60,7 +60,7 @@ export default function Page() {
 
         {/* Surprise CTA */}
         <div className="flex flex-col items-center gap-4 py-16 text-center">
-          <p className="font-serif text-xl font-bold text-foreground md:text-2xl">
+          <p className="font-sans text-xl font-bold text-foreground md:text-2xl">
             {"הפתעה: רוצה לראות איך תיראי בסוף התוכנית?"}
           </p>
           <a

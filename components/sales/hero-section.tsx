@@ -14,7 +14,7 @@ export function HeroSection() {
       </div>
 
       {/* Main headline */}
-      <h1 className="text-center font-serif text-4xl font-black leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl text-balance">
+      <h1 className="text-center font-sans text-4xl font-black leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl text-balance">
         {"איך להוריד 2 מידות בג׳ינס"}
         <br />
         {"תוך 21 יום"}
@@ -22,7 +22,7 @@ export function HeroSection() {
 
       {/* Subheadline */}
       <div className="flex flex-col items-center gap-4 text-center">
-        <h2 className="max-w-2xl font-serif text-xl font-medium leading-relaxed text-foreground md:text-2xl text-balance">
+        <h2 className="max-w-2xl font-sans text-xl font-medium leading-relaxed text-foreground md:text-2xl text-balance">
           {"בשבוע הקרוב נפעיל לך את מתג שריפת השומן"}
           <br />
           {"שיאפשר לגוף שלך להמיס את השומן הבטני"}

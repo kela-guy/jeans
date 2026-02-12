@@ -1,7 +1,7 @@
 export function SocialProofSection() {
   return (
     <section className="flex flex-col gap-8 py-16">
-      <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl">
+      <h2 className="font-sans text-3xl font-bold text-foreground md:text-4xl">
         {"וכולם יראו את זה!"}
       </h2>
 
@@ -10,7 +10,7 @@ export function SocialProofSection() {
           {"המשפט שחוזר אצלי מלקוחות לאחרונה:"}
         </p>
         <blockquote className="border-r-4 border-foreground pr-6 py-2">
-          <p className="font-serif text-2xl font-bold italic text-foreground md:text-3xl">
+          <p className="font-sans text-2xl font-bold italic text-foreground md:text-3xl">
             {"״לא מאמינים לי שירדתי בלי זריקות״"}
           </p>
         </blockquote>

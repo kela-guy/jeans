@@ -8,7 +8,7 @@ export function OfferSection() {
           <br />
           {"כיצד להוריד 5 קילו בשבועיים"}
         </p>
-        <h2 className="font-serif text-3xl font-black leading-tight text-foreground md:text-4xl text-balance">
+        <h2 className="font-sans text-3xl font-black leading-tight text-foreground md:text-4xl text-balance">
           {"עכשיו הוא בא להראות לך כיצד להוריד 2 מידות בג׳ינס"}
           <br />
           {"וכל זה בקלות תוך 21 ימים בקורס דיגיטלי."}
@@ -26,7 +26,7 @@ export function OfferSection() {
 
       {/* What you get */}
       <div className="flex flex-col gap-6">
-        <h3 className="font-serif text-2xl font-bold text-foreground md:text-3xl">
+        <h3 className="font-sans text-2xl font-bold text-foreground md:text-3xl">
           {"מה מקבלים"}
         </h3>
         <div className="flex flex-col gap-4">
@@ -50,7 +50,7 @@ export function OfferSection() {
 
       {/* Bonuses */}
       <div className="flex flex-col gap-6">
-        <h3 className="font-serif text-2xl font-bold text-foreground md:text-3xl">
+        <h3 className="font-sans text-2xl font-bold text-foreground md:text-3xl">
           {"בונוסים"}
         </h3>
         <div className="flex flex-col gap-4">
@@ -70,7 +70,7 @@ export function OfferSection() {
 
       {/* Guarantee */}
       <div className="flex flex-col gap-4 rounded border-2 border-foreground p-6 text-center md:p-8">
-        <h3 className="font-serif text-2xl font-bold text-foreground md:text-3xl">
+        <h3 className="font-sans text-2xl font-bold text-foreground md:text-3xl">
           {"אחריות"}
         </h3>
         <p className="text-lg leading-relaxed text-muted-foreground">

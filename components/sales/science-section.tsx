@@ -1,18 +1,18 @@
 export function ScienceSection() {
   return (
     <section className="flex flex-col gap-8 py-16">
-      <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl">
+      <h2 className="font-sans text-3xl font-bold text-foreground md:text-4xl">
         {"אבל בסוף המדע הוכיח ש…."}
       </h2>
 
       <div className="flex flex-col gap-4 text-lg leading-relaxed text-foreground">
         <p>{"יש משהו אחד שאחראי לאגירת השומן בגוף"}</p>
         <p>{"אני קורא לו:"}</p>
-        <p className="font-serif text-3xl font-black text-foreground md:text-4xl">
+        <p className="font-sans text-3xl font-black text-foreground md:text-4xl">
           {"מתג שריפת השומן של הגוף"}
         </p>
         <p className="text-muted-foreground">{"ובשפה המקצועית:"}</p>
-        <p className="font-serif text-2xl font-bold text-foreground md:text-3xl">
+        <p className="font-sans text-2xl font-bold text-foreground md:text-3xl">
           {"הורמון האינסולין"}
         </p>
       </div>
@@ -38,7 +38,7 @@ export function ScienceSection() {
 
       <div className="my-4 border-t border-border" />
 
-      <p className="font-serif text-xl font-bold leading-relaxed text-foreground md:text-2xl text-balance">
+      <p className="font-sans text-xl font-bold leading-relaxed text-foreground md:text-2xl text-balance">
         {"ומה קורה כשרצים בכוח אבל בכיוון לא נכון?"}
         <br />
         <span className="text-muted-foreground">{"אנחנו רק מתרחקים מהמטרה."}</span>

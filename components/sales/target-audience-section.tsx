@@ -17,7 +17,7 @@ export function TargetAudienceSection() {
   return (
     <section className="flex flex-col gap-10 py-16">
       <div className="flex flex-col gap-6">
-        <h3 className="font-serif text-2xl font-bold text-foreground md:text-3xl">
+        <h3 className="font-sans text-2xl font-bold text-foreground md:text-3xl">
           {"למי זה מתאים"}
         </h3>
         <ul className="flex flex-col gap-3">
@@ -31,7 +31,7 @@ export function TargetAudienceSection() {
       </div>
 
       <div className="flex flex-col gap-6">
-        <h3 className="font-serif text-2xl font-bold text-foreground md:text-3xl">
+        <h3 className="font-sans text-2xl font-bold text-foreground md:text-3xl">
           {"למי זה לא מתאים"}
         </h3>
         <ul className="flex flex-col gap-3">

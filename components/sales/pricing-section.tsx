@@ -1,14 +1,14 @@
 export function PricingSection() {
   return (
     <section className="flex flex-col gap-8 py-16" id="pricing">
-      <h2 className="text-center font-serif text-3xl font-bold text-foreground md:text-4xl">
+      <h2 className="text-center font-sans text-3xl font-bold text-foreground md:text-4xl">
         {"מחיר"}
       </h2>
 
       <div className="mx-auto flex w-full max-w-md flex-col gap-6 rounded border-2 border-foreground p-8">
         <div className="flex flex-col gap-2 text-center">
           <p className="text-muted-foreground line-through text-lg">{"₪XXX"}</p>
-          <p className="font-serif text-5xl font-black text-foreground">{"₪XXX"}</p>
+          <p className="font-sans text-5xl font-black text-foreground">{"₪XXX"}</p>
           <p className="text-muted-foreground">{"תשלום חד פעמי"}</p>
         </div>
 
