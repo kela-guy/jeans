@@ -1,10 +1,10 @@
 <!--
-  SALES PAGE EMBED FOR ELEMENTOR
-  ================================
-  1. Deploy the Next.js project to Vercel (needed for the PayPlus API at /api/payplus)
-  2. Update the API_URL variable below to your Vercel domain
-  3. Paste this entire HTML into an Elementor HTML widget
-  4. Set the Elementor section to full-width, no padding
+  SALES PAGE CONTENT EMBED FOR ELEMENTOR
+  =======================================
+  1. Paste this entire HTML into an Elementor HTML widget
+  2. Set the Elementor section to full-width, no padding
+  3. Replace the CTA buttons (marked with "CTA PLACEHOLDER") with your Elementor checkout
+  4. All styles are scoped under .sp-root to avoid conflicts with your WordPress theme
 -->
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
@@ -189,24 +189,6 @@
   }
   .sp-btn:hover { opacity: 0.9; }
   .sp-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-
-  /* Form */
-  .sp-form { max-width: 380px; margin: 0 auto; }
-  .sp-form label { font-size: 14px; font-weight: 500; display: block; margin-bottom: 6px; }
-  .sp-form input {
-    width: 100%;
-    border: 1px solid hsl(0, 0%, 85%);
-    background: hsl(210, 40%, 98%);
-    border-radius: 6px;
-    padding: 12px 16px;
-    font-family: 'Rubik', sans-serif;
-    font-size: 14px;
-    color: hsl(0, 0%, 9%);
-    outline: none;
-  }
-  .sp-form input:focus { border-color: hsl(0, 0%, 9%); }
-  .sp-form input[dir="ltr"] { text-align: left; }
-  .sp-form .sp-error { text-align: center; font-size: 14px; color: #dc2626; }
 
   /* List items */
   .sp-check-list { list-style: none; }
@@ -627,26 +609,11 @@
     </div>
   </section>
 
-  <!-- ====== SIGNUP FORM ====== -->
+  <!-- ====== CTA PLACEHOLDER - Replace with Elementor checkout ====== -->
   <section class="sp-section" id="signup">
-    <h2 class="sp-h2 sp-center">טופס הרשמה</h2>
-    <form class="sp-form sp-mt-10 sp-flex-col sp-gap-4" id="signupForm" onsubmit="return handleFormSubmit(event)">
-      <div>
-        <label for="sp-name">שם מלא</label>
-        <input id="sp-name" type="text" required placeholder="הכניסי את שמך המלא">
-      </div>
-      <div>
-        <label for="sp-email">אימייל</label>
-        <input id="sp-email" type="email" required dir="ltr" placeholder="הכניסי את האימייל שלך">
-      </div>
-      <div>
-        <label for="sp-phone">טלפון</label>
-        <input id="sp-phone" type="tel" required dir="ltr" placeholder="הכניסי מספר טלפון">
-      </div>
-      <p class="sp-error" id="formError" style="display:none;"></p>
-      <button type="submit" class="sp-btn sp-mt-2" id="submitBtn">!אני רוצה להתחיל עכשיו</button>
-      <p class="sp-center sp-body-sm" style="font-size:12px;">הפרטים שלך מאובטחים ולא יועברו לצד שלישי</p>
-    </form>
+    <div class="sp-center">
+      <a href="#" class="sp-btn" style="max-width:380px;margin:0 auto;">!אני רוצה להתחיל עכשיו</a>
+    </div>
   </section>
 
   <!-- ====== TARGET AUDIENCE ====== -->
@@ -708,26 +675,11 @@
     </div>
   </section>
 
-  <!-- ====== SECOND SIGNUP ====== -->
+  <!-- ====== SECOND CTA PLACEHOLDER - Replace with Elementor checkout ====== -->
   <section class="sp-section">
-    <h2 class="sp-h2 sp-center">טופס הרשמה</h2>
-    <form class="sp-form sp-mt-10 sp-flex-col sp-gap-4" onsubmit="return handleFormSubmit(event)">
-      <div>
-        <label for="sp-name2">שם מלא</label>
-        <input id="sp-name2" type="text" required placeholder="הכניסי את שמך המלא">
-      </div>
-      <div>
-        <label for="sp-email2">אימייל</label>
-        <input id="sp-email2" type="email" required dir="ltr" placeholder="הכניסי את האימייל שלך">
-      </div>
-      <div>
-        <label for="sp-phone2">טלפון</label>
-        <input id="sp-phone2" type="tel" required dir="ltr" placeholder="הכניסי מספר טלפון">
-      </div>
-      <p class="sp-error" style="display:none;"></p>
-      <button type="submit" class="sp-btn sp-mt-2">!אני רוצה להתחיל עכשיו</button>
-      <p class="sp-center sp-body-sm" style="font-size:12px;">הפרטים שלך מאובטחים ולא יועברו לצד שלישי</p>
-    </form>
+    <div class="sp-center">
+      <a href="#" class="sp-btn" style="max-width:380px;margin:0 auto;">!אני רוצה להתחיל עכשיו</a>
+    </div>
   </section>
 
   <!-- ====== SURPRISE CTA ====== -->
@@ -750,11 +702,6 @@
 
 <script>
 (function() {
-  // ============================================
-  // IMPORTANT: Update this URL to your Vercel deployment domain
-  // ============================================
-  var API_URL = 'https://YOUR-VERCEL-DOMAIN.vercel.app/api/payplus';
-
   // --- SWITCH SCROLL ANIMATION ---
   function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
   function lerp(a, b, t) { return a + (b - a) * t; }
@@ -853,44 +800,5 @@
     }
   };
 
-  // --- FORM SUBMIT ---
-  window.handleFormSubmit = function(e) {
-    e.preventDefault();
-    var form = e.target;
-    var nameInput = form.querySelector('input[type="text"]');
-    var emailInput = form.querySelector('input[type="email"]');
-    var phoneInput = form.querySelector('input[type="tel"]');
-    var btn = form.querySelector('button[type="submit"]');
-    var errorEl = form.querySelector('.sp-error');
-
-    btn.disabled = true;
-    btn.textContent = '...מעבירה לתשלום';
-    errorEl.style.display = 'none';
-
-    fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: nameInput.value,
-        email: emailInput.value,
-        phone: phoneInput.value
-      })
-    })
-    .then(function(res) { return res.json().then(function(d) { return { ok: res.ok, data: d }; }); })
-    .then(function(result) {
-      if (!result.ok || !result.data.paymentLink) {
-        throw new Error(result.data.error || 'שגיאה ביצירת קישור תשלום');
-      }
-      window.location.href = result.data.paymentLink;
-    })
-    .catch(function(err) {
-      errorEl.textContent = err.message || 'שגיאה בלתי צפויה, נסי שוב';
-      errorEl.style.display = 'block';
-      btn.disabled = false;
-      btn.textContent = '!אני רוצה להתחיל עכשיו';
-    });
-
-    return false;
-  };
 })();
 </script>
