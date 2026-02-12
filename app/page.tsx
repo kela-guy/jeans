@@ -6,7 +6,6 @@ import { PainAgitationSection } from "@/components/sales/pain-agitation-section"
 import { EnemySection } from "@/components/sales/enemy-section"
 import { ScienceSection } from "@/components/sales/science-section"
 import { OfferSection } from "@/components/sales/offer-section"
-import { PricingSection } from "@/components/sales/pricing-section"
 import { TargetAudienceSection } from "@/components/sales/target-audience-section"
 import { FaqSection } from "@/components/sales/faq-section"
 import { AboutSection } from "@/components/sales/about-section"
@@ -24,7 +23,6 @@ export default function Page() {
         <EnemySection />
         <ScienceSection />
         <OfferSection />
-        <PricingSection />
         <TargetAudienceSection />
         <FaqSection />
         <AboutSection />

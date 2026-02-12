@@ -69,11 +69,7 @@ export function OfferSection() {
         </div>
       </div>
 
-      {/* Guarantee */}
-      <div className="mt-14 rounded border-2 border-foreground px-6 py-8 text-center md:px-8">
-        <h3 className="text-xl font-bold text-foreground md:text-2xl">{"אחריות"}</h3>
-        <p className="mt-3 text-base leading-relaxed text-muted-foreground">{"פרטי האחריות יופיעו כאן"}</p>
-      </div>
+
     </section>
   )
 }
