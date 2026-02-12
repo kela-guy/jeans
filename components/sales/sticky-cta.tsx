@@ -22,7 +22,7 @@ export function StickyCta() {
           {"הורידי 2 מידות בג׳ינס תוך 21 יום"}
         </p>
         <a
-          href="#signup"
+          href="#pricing"
           className="block w-full rounded bg-foreground px-8 py-3 text-center font-bold text-primary-foreground transition-opacity hover:opacity-90 md:w-auto"
         >
           {"!אני רוצה להתחיל"}

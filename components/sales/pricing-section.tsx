@@ -28,7 +28,7 @@ export function PricingSection() {
         </ul>
 
         <a
-          href="#signup"
+          href="#pricing"
           className="mt-8 block w-full rounded bg-foreground py-4 text-center text-base font-bold text-primary-foreground transition-opacity hover:opacity-90"
         >
           {"!אני רוצה להתחיל"}

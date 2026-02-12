@@ -7,7 +7,6 @@ import { EnemySection } from "@/components/sales/enemy-section"
 import { ScienceSection } from "@/components/sales/science-section"
 import { OfferSection } from "@/components/sales/offer-section"
 import { PricingSection } from "@/components/sales/pricing-section"
-import { SignupForm } from "@/components/sales/signup-form"
 import { TargetAudienceSection } from "@/components/sales/target-audience-section"
 import { FaqSection } from "@/components/sales/faq-section"
 import { AboutSection } from "@/components/sales/about-section"
@@ -26,11 +25,9 @@ export default function Page() {
         <ScienceSection />
         <OfferSection />
         <PricingSection />
-        <SignupForm />
         <TargetAudienceSection />
         <FaqSection />
         <AboutSection />
-        <SignupForm />
 
         {/* Surprise CTA */}
         <div className="flex flex-col items-center gap-3 py-20 text-center">
@@ -38,7 +35,7 @@ export default function Page() {
             {"הפתעה: רוצה לראות איך תיראי בסוף התוכנית?"}
           </p>
           <a
-            href="#signup"
+            href="#pricing"
             className="mt-4 rounded bg-foreground px-8 py-4 text-base font-bold text-primary-foreground transition-opacity hover:opacity-90"
           >
             {"לחצי כאן"}
