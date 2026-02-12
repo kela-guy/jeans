@@ -9,7 +9,9 @@ export function HeroSection() {
           <span className="text-sm text-muted-foreground">{"[תמונה של ערוצי טלוויזיה ועיתונות]"}</span>
         </div>
         <p className="mt-2 text-base leading-relaxed text-muted-foreground">
-          {"אחרי שהוכיח ל100 אלף ישראלים איך לרדת 5 קילו בשבועיים בצורה שפויה, אביב מראה לך"}
+          {"אחרי שהוכיח ל"}
+          <span className="font-black text-foreground">{"100,000"}</span>
+          {" ישראלים איך לרדת 5 קילו בשבועיים בצורה שפויה, אביב מראה לך"}
         </p>
       </div>
 

@@ -4,7 +4,9 @@ export function OfferSection() {
       {/* Transition */}
       <div className="text-center">
         <p className="text-base leading-relaxed text-muted-foreground">
-          {"אחרי שבשנת 2025 אביב הראה ל100 אלף ישראלים"}
+          {"אחרי שבשנת 2025 אביב הראה ל"}
+          <span className="font-black text-foreground">{"100,000"}</span>
+          {" ישראלים"}
           <br />
           {"כיצד להוריד 5 קילו בשבועיים"}
         </p>
