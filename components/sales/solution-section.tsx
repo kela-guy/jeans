@@ -1,4 +1,5 @@
 import { Check } from "lucide-react"
+import { SwitchIllustration } from "./switch-illustration"
 
 export function SolutionSection() {
   const switchOnBenefits = [
@@ -47,34 +48,8 @@ export function SolutionSection() {
           </p>
         </div>
 
-        {/* Switch off vs on */}
-        <div className="flex flex-col gap-6 md:flex-row md:gap-8">
-          <div className="flex-1 rounded border border-border bg-muted p-6">
-            <p className="mb-3 font-sans text-lg font-bold text-foreground">
-              {"כשהמתג כבוי"}
-            </p>
-            <p className="text-sm text-muted-foreground">
-              {"(הורמון אינסולין לא מאוזן)"}
-            </p>
-            <p className="mt-3 text-foreground leading-relaxed">
-              {"הגוף אוגר שומן ומתכונן למצבי סטרס"}
-            </p>
-          </div>
-          <div className="flex-1 rounded border-2 border-foreground bg-foreground p-6">
-            <p className="mb-3 font-sans text-lg font-bold text-primary-foreground">
-              {"כשהמתג פעיל"}
-            </p>
-            <p className="text-sm text-primary-foreground/70">
-              {"(הורמון אינסולין מאוזן)"}
-            </p>
-            <p className="mt-3 text-primary-foreground leading-relaxed">
-              {"הגוף שורף שומן, שורף בצורה יעילה יותר את האוכל והופך אותו לאנרגיה"}
-            </p>
-            <p className="mt-1 text-primary-foreground leading-relaxed">
-              {"ובעיקר, שומר אותנו בריאים, חזקים וקלילים."}
-            </p>
-          </div>
-        </div>
+        {/* Interactive Switch Illustration */}
+        <SwitchIllustration />
       </div>
 
       {/* Benefits when switch is on */}
