@@ -1,21 +1,16 @@
 "use client"
 
 import { useEffect, useRef, useState, useCallback } from "react"
-import { Check, X } from "lucide-react"
 
 const OFF_ITEMS = [
   "אגירת שומן",
   "עייפות כרונית",
   "דחף למתוק",
-  "מטבוליזם איטי",
-  "שינה גרועה",
 ]
 
 const ON_ITEMS = [
   "שריפת שומן",
   "אנרגיה גבוהה",
-  "אפס דחף למתוק",
-  "מטבוליזם מהיר",
   "שינה איכותית",
 ]
 
@@ -29,7 +24,7 @@ function clamp(v: number, min: number, max: number) {
 
 export function SwitchIllustration() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [progress, setProgress] = useState(0) // 0 = fully OFF, 1 = fully ON
+  const [progress, setProgress] = useState(0)
 
   const handleScroll = useCallback(() => {
     const el = containerRef.current
@@ -38,10 +33,8 @@ export function SwitchIllustration() {
     const rect = el.getBoundingClientRect()
     const windowH = window.innerHeight
 
-    // Animation starts when element top reaches 80% of viewport (20% from top)
-    // Animation ends when element bottom reaches 20% of viewport
-    const startThreshold = windowH * 0.8 // element top must reach here to start
-    const endThreshold = windowH * 0.2   // element bottom reaches here to finish
+    const startThreshold = windowH * 0.8
+    const endThreshold = windowH * 0.2
 
     const totalRange = startThreshold - endThreshold + rect.height
     const scrolled = startThreshold - rect.top
@@ -60,168 +53,120 @@ export function SwitchIllustration() {
     }
   }, [handleScroll])
 
-  // Derive all visual values from progress
-  // Phase 1 (0 - 0.35): OFF state visible, items appear
-  // Phase 2 (0.35 - 0.55): The switch flips, bg inverts
-  // Phase 3 (0.55 - 1): ON state items cascade in
+  // Phase 1 (0 - 0.4): OFF state
+  // Phase 2 (0.4 - 0.6): Switch flips
+  // Phase 3 (0.6 - 1): ON state
 
-  const switchProgress = clamp((progress - 0.35) / 0.2, 0, 1) // 0-1 over the flip range
-  const isFlipped = progress > 0.45
+  const switchT = clamp((progress - 0.4) / 0.2, 0, 1)
+  const isFlipped = progress > 0.5
 
-  // Background: light -> dark
-  const bgLightness = lerp(95, 5, switchProgress)
+  // Background
+  const bgLight = lerp(96, 8, switchT)
 
-  // Knob position (0 = right/OFF in RTL, 1 = left/ON in RTL)
-  const knobOffset = switchProgress * 100 // percentage for translateX
+  // Knob: in RTL, OFF = right side, ON = left side
+  // Use percentage-based position within the track
+  const knobPosition = switchT * 100 // 0% = right (OFF), 100% = left (ON)
 
-  // Track color
-  const trackLightness = lerp(75, 100, switchProgress)
-  const trackBorderLightness = lerp(60, 100, switchProgress)
-  const knobLightness = lerp(40, 5, switchProgress)
+  // Track
+  const trackBg = lerp(88, 20, switchT)
+  const trackBorder = lerp(78, 30, switchT)
+  const knobBg = lerp(30, 96, switchT)
 
-  // Text colors
-  const labelColor = `hsl(0, 0%, 50%)`
-  const stateColor = `hsl(0, 0%, ${isFlipped ? lerp(50, 100, clamp((progress - 0.45) / 0.15, 0, 1)) : lerp(50, 20, clamp(progress / 0.35, 0, 1))}%)`
-
-  // OFF items visibility (fade in from 0.05 to 0.3)
-  const offItemsVisible = progress < 0.5
-  const getOffItemOpacity = (i: number) => {
-    const itemStart = 0.05 + i * 0.05
-    const itemEnd = itemStart + 0.08
-    if (progress < itemStart) return 0
-    if (progress > 0.5) return clamp(1 - (progress - 0.5) / 0.1, 0, 1)
-    return clamp((progress - itemStart) / (itemEnd - itemStart), 0, 1)
+  // OFF items
+  const getOffOpacity = (i: number) => {
+    const start = 0.08 + i * 0.08
+    const end = start + 0.1
+    const fadeOut = progress > 0.38 ? clamp(1 - (progress - 0.38) / 0.08, 0, 1) : 1
+    return clamp((progress - start) / (end - start), 0, 1) * fadeOut
   }
 
-  // ON items visibility (fade in from 0.55 to 0.9)
-  const getOnItemOpacity = (i: number) => {
-    const itemStart = 0.55 + i * 0.06
-    const itemEnd = itemStart + 0.1
-    if (progress < itemStart) return 0
-    return clamp((progress - itemStart) / (itemEnd - itemStart), 0, 1)
+  // ON items
+  const getOnOpacity = (i: number) => {
+    const start = 0.6 + i * 0.08
+    const end = start + 0.12
+    return clamp((progress - start) / (end - start), 0, 1)
   }
 
-  const getOnItemTranslate = (i: number) => {
-    const itemStart = 0.55 + i * 0.06
-    const itemEnd = itemStart + 0.1
-    const t = clamp((progress - itemStart) / (itemEnd - itemStart), 0, 1)
-    return lerp(12, 0, t)
+  const getOnY = (i: number) => {
+    return lerp(8, 0, getOnOpacity(i))
   }
 
-  // Bottom message
-  const offMsgOpacity = clamp((progress - 0.15) / 0.15, 0, 1) * (progress < 0.4 ? 1 : clamp(1 - (progress - 0.4) / 0.1, 0, 1))
-  const onMsgOpacity = clamp((progress - 0.75) / 0.15, 0, 1)
-
-  // ON/OFF label in track
-  const offLabelOpacity = 1 - switchProgress
-  const onLabelOpacity = switchProgress
+  // Messages
+  const offMsg = clamp((progress - 0.2) / 0.12, 0, 1) * (progress < 0.38 ? 1 : clamp(1 - (progress - 0.38) / 0.08, 0, 1))
+  const onMsg = clamp((progress - 0.8) / 0.12, 0, 1)
 
   return (
     <div
       ref={containerRef}
-      className="relative my-8 overflow-hidden rounded-lg border border-border"
-      style={{ minHeight: "520px" }}
+      className="relative my-6 overflow-hidden rounded-lg border border-border"
     >
       {/* Background */}
       <div
         className="absolute inset-0"
-        style={{
-          backgroundColor: `hsl(0, 0%, ${bgLightness}%)`,
-          transition: "none",
-        }}
+        style={{ backgroundColor: `hsl(210, 20%, ${bgLight}%)` }}
       />
 
-      <div className="relative flex flex-col items-center gap-8 px-6 py-12 md:py-16">
-        {/* Title label */}
+      <div className="relative flex flex-col items-center gap-5 px-5 py-8 md:py-10">
+        {/* Label */}
         <p
-          className="text-center text-sm font-medium tracking-wider uppercase"
-          style={{ color: labelColor }}
+          className="text-xs font-semibold tracking-widest uppercase"
+          style={{ color: `hsl(0,0%,${isFlipped ? 60 : 50}%)` }}
         >
           {"מתג שריפת השומן"}
         </p>
 
-        {/* The Switch */}
-        <div className="flex flex-col items-center gap-4">
-          {/* Switch track */}
+        {/* Switch */}
+        <div
+          className="relative flex h-12 w-24 items-center rounded-full border"
+          style={{
+            backgroundColor: `hsl(0,0%,${trackBg}%)`,
+            borderColor: `hsl(0,0%,${trackBorder}%)`,
+          }}
+        >
+          {/* Knob */}
           <div
-            className="relative flex h-20 w-40 items-center rounded-full border-2 md:h-24 md:w-48"
+            className="absolute h-9 w-9 rounded-full"
             style={{
-              backgroundColor: `hsl(0, 0%, ${trackLightness}%)`,
-              borderColor: `hsl(0, 0%, ${trackBorderLightness}%)`,
+              backgroundColor: `hsl(0,0%,${knobBg}%)`,
+              top: "50%",
+              transform: "translateY(-50%)",
+              right: `${lerp(3, 57, switchT)}%`,
             }}
+          />
+          {/* Labels inside track */}
+          <span
+            className="absolute left-2.5 text-[10px] font-bold"
+            style={{ color: `hsl(0,0%,${lerp(50, 70, switchT)}%)`, opacity: 1 - switchT }}
           >
-            {/* Switch knob - RTL: starts on the right (OFF), moves left (ON) */}
-            <div
-              className="absolute h-16 w-16 rounded-full shadow-lg md:h-20 md:w-20"
-              style={{
-                backgroundColor: `hsl(0, 0%, ${knobLightness}%)`,
-                top: "50%",
-                transform: `translateY(-50%)`,
-                // In RTL, right:2px is the starting OFF position
-                // We transition to left:2px for ON
-                right: `${lerp(2, -1, switchProgress)}px`,
-                left: switchProgress > 0.5 ? `2px` : "auto",
-                transition: "none",
-              }}
-            />
-
-            {/* OFF label */}
-            <span
-              className="absolute text-sm font-bold md:text-base"
-              style={{
-                left: "16px",
-                opacity: offLabelOpacity,
-                color: "hsl(0,0%,30%)",
-              }}
-            >
-              OFF
-            </span>
-
-            {/* ON label */}
-            <span
-              className="absolute text-sm font-bold md:text-base"
-              style={{
-                right: "16px",
-                opacity: onLabelOpacity,
-                color: "hsl(0,0%,5%)",
-              }}
-            >
-              ON
-            </span>
-          </div>
-
-          {/* State label */}
-          <div className="h-8 flex items-center justify-center">
-            <p
-              className="text-xl font-bold md:text-2xl"
-              style={{ color: stateColor }}
-            >
-              {isFlipped ? "אינסולין מאוזן" : "אינסולין לא מאוזן"}
-            </p>
-          </div>
+            OFF
+          </span>
+          <span
+            className="absolute right-2.5 text-[10px] font-bold"
+            style={{ color: `hsl(0,0%,${lerp(30, 96, switchT)}%)`, opacity: switchT }}
+          >
+            ON
+          </span>
         </div>
 
-        {/* Items list */}
-        <div className="flex w-full max-w-md flex-col gap-5">
+        {/* State label */}
+        <p
+          className="text-base font-bold"
+          style={{ color: `hsl(0,0%,${isFlipped ? 90 : 20}%)` }}
+        >
+          {isFlipped ? "אינסולין מאוזן" : "אינסולין לא מאוזן"}
+        </p>
+
+        {/* Items */}
+        <div className="flex w-full max-w-xs flex-col gap-2.5">
           {!isFlipped
             ? OFF_ITEMS.map((item, i) => (
                 <div
                   key={`off-${i}`}
-                  className="flex items-center justify-center gap-3"
-                  style={{
-                    opacity: getOffItemOpacity(i),
-                    transform: `translateY(${lerp(12, 0, getOffItemOpacity(i))}px)`,
-                  }}
+                  className="flex items-center justify-center gap-2"
+                  style={{ opacity: getOffOpacity(i) }}
                 >
-                  <X
-                    className="h-5 w-5 shrink-0"
-                    style={{ color: "hsl(0, 0%, 40%)" }}
-                    strokeWidth={2.5}
-                  />
-                  <span
-                    className="text-lg font-medium md:text-xl"
-                    style={{ color: "hsl(0, 0%, 30%)" }}
-                  >
+                  <span className="text-sm" style={{ color: "hsl(0,0%,45%)" }}>{"✕"}</span>
+                  <span className="text-sm font-medium" style={{ color: "hsl(0,0%,35%)" }}>
                     {item}
                   </span>
                 </div>
@@ -229,21 +174,14 @@ export function SwitchIllustration() {
             : ON_ITEMS.map((item, i) => (
                 <div
                   key={`on-${i}`}
-                  className="flex items-center justify-center gap-3"
+                  className="flex items-center justify-center gap-2"
                   style={{
-                    opacity: getOnItemOpacity(i),
-                    transform: `translateY(${getOnItemTranslate(i)}px)`,
+                    opacity: getOnOpacity(i),
+                    transform: `translateY(${getOnY(i)}px)`,
                   }}
                 >
-                  <Check
-                    className="h-5 w-5 shrink-0"
-                    style={{ color: "hsl(0, 0%, 100%)" }}
-                    strokeWidth={2.5}
-                  />
-                  <span
-                    className="text-lg font-medium md:text-xl"
-                    style={{ color: "hsl(0, 0%, 100%)" }}
-                  >
+                  <span className="text-sm" style={{ color: "hsl(0,0%,80%)" }}>{"✓"}</span>
+                  <span className="text-sm font-medium" style={{ color: "hsl(0,0%,92%)" }}>
                     {item}
                   </span>
                 </div>
@@ -251,24 +189,18 @@ export function SwitchIllustration() {
         </div>
 
         {/* Bottom message */}
-        <div className="mt-4 h-12 flex items-center justify-center">
+        <div className="h-8 flex items-center justify-center">
           {!isFlipped ? (
             <p
-              className="text-center text-lg font-bold md:text-xl"
-              style={{
-                color: "hsl(0, 0%, 30%)",
-                opacity: offMsgOpacity,
-              }}
+              className="text-center text-sm font-semibold"
+              style={{ color: "hsl(0,0%,35%)", opacity: offMsg }}
             >
               {"הגוף אוגר שומן ומתכונן למצבי סטרס"}
             </p>
           ) : (
             <p
-              className="text-center text-lg font-bold md:text-xl"
-              style={{
-                color: "hsl(0, 0%, 100%)",
-                opacity: onMsgOpacity,
-              }}
+              className="text-center text-sm font-semibold"
+              style={{ color: "hsl(0,0%,92%)", opacity: onMsg }}
             >
               {"הגוף שורף שומן כמו מכונה"}
             </p>
