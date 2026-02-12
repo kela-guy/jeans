@@ -30,28 +30,28 @@ export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section className="flex flex-col gap-8 py-16">
-      <h2 className="font-sans text-3xl font-bold text-foreground md:text-4xl">
+    <section className="py-20">
+      <h2 className="text-2xl font-bold text-foreground md:text-3xl">
         {"שאלות ותשובות"}
       </h2>
 
-      <div className="flex flex-col divide-y divide-border">
+      <div className="mt-8 flex flex-col divide-y divide-border">
         {faqs.map((faq, i) => (
           <div key={i}>
             <button
               onClick={() => setOpenIndex(openIndex === i ? null : i)}
-              className="flex w-full items-center justify-between gap-4 py-5 text-right"
+              className="flex w-full items-center justify-between gap-4 py-4 text-right"
               aria-expanded={openIndex === i}
             >
-              <span className="text-lg font-medium text-foreground">{faq.q}</span>
+              <span className="text-base font-medium text-foreground">{faq.q}</span>
               <ChevronDown
-                className={`h-5 w-5 shrink-0 text-muted-foreground transition-transform ${
+                className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform ${
                   openIndex === i ? "rotate-180" : ""
                 }`}
               />
             </button>
             {openIndex === i && (
-              <p className="pb-5 text-lg leading-relaxed text-muted-foreground">
+              <p className="pb-4 text-sm leading-relaxed text-muted-foreground">
                 {faq.a}
               </p>
             )}

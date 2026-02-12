@@ -13,54 +13,59 @@ export function SolutionSection() {
   ]
 
   return (
-    <section className="flex flex-col gap-12 py-16">
+    <section className="py-20">
       {/* The only solution */}
-      <div className="flex flex-col gap-6">
-        <h2 className="font-sans text-3xl font-bold text-foreground md:text-4xl">
-          {"הפתרון היחיד!"}
-        </h2>
-        <div className="flex flex-col gap-3 text-lg leading-relaxed text-foreground">
-          <p className="font-bold text-xl">{"הוא הפעלת מתג שריפת השומן"}</p>
-          <p>{"כל עוד המתג הוא על כבוי, הגוף יאגור שומן"}</p>
-          <p className="font-bold">
-            {"וכשהמתג פעיל, הגוף שורף גם את השומן בכל אזורי הגוף"}
-          </p>
-          <p>{"גם את השומן הויסראלי (השומן הבטני)"}</p>
-          <p>{"וגם את הארוחה האחרונה שלנו"}</p>
-          <p className="font-bold">
-            {"כך שהגוף גם שורף שומן וגם מפסיק אגירה של שומן חדש"}
-          </p>
-        </div>
+      <p className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
+        {"הפתרון"}
+      </p>
+
+      <h2 className="mt-3 text-3xl font-black text-foreground md:text-4xl">
+        {"הפתרון היחיד!"}
+      </h2>
+
+      <p className="mt-8 text-xl font-bold text-foreground">
+        {"הוא הפעלת מתג שריפת השומן"}
+      </p>
+
+      <div className="mt-4 flex flex-col gap-2 text-base leading-relaxed text-foreground">
+        <p>{"כל עוד המתג הוא על כבוי, הגוף יאגור שומן"}</p>
+        <p className="font-bold">{"וכשהמתג פעיל, הגוף שורף גם את השומן בכל אזורי הגוף"}</p>
+        <p className="text-muted-foreground">{"גם את השומן הויסראלי (השומן הבטני)"}</p>
+        <p className="text-muted-foreground">{"וגם את הארוחה האחרונה שלנו"}</p>
       </div>
 
+      <p className="mt-6 text-lg font-bold text-foreground">
+        {"כך שהגוף גם שורף שומן וגם מפסיק אגירה של שומן חדש"}
+      </p>
+
       {/* What is the switch */}
-      <div className="flex flex-col gap-6">
-        <h3 className="font-sans text-2xl font-bold text-foreground md:text-3xl">
+      <div className="mt-16">
+        <h3 className="text-2xl font-bold text-foreground md:text-3xl">
           {"מהו מתג שריפת השומן?"}
         </h3>
-        <div className="flex flex-col gap-3 text-lg leading-relaxed text-foreground">
+
+        <div className="mt-6 flex flex-col gap-2 text-base leading-relaxed text-foreground">
           <p>{"המתג הוא הורמון אחד מעצבן במיוחד,"}</p>
-          <p className="font-bold text-xl">
-            {"הסיבה היחידה שבגללה עולים במשקל"}
-          </p>
-          <p className="text-muted-foreground">
-            {"וזו לא אמירה, זה מוכח במאות רבות של מחקרים"}
-          </p>
+          <p className="text-lg font-bold">{"הסיבה היחידה שבגללה עולים במשקל"}</p>
+          <p className="text-sm text-muted-foreground">{"וזו לא אמירה, זה מוכח במאות רבות של מחקרים"}</p>
         </div>
 
         {/* Interactive Switch Illustration */}
-        <SwitchIllustration />
+        <div className="mt-10">
+          <SwitchIllustration />
+        </div>
       </div>
 
       {/* Benefits when switch is on */}
-      <div className="flex flex-col gap-6">
-        <h3 className="font-sans text-2xl font-bold text-foreground md:text-3xl">
+      <div className="mt-16">
+        <h3 className="text-2xl font-bold text-foreground md:text-3xl">
           {"ברגע שתדליקי את המתג"}
         </h3>
-        <ul className="flex flex-col gap-3">
+
+        <ul className="mt-8 flex flex-col gap-3">
           {switchOnBenefits.map((benefit, i) => (
-            <li key={i} className="flex items-start gap-3 text-lg leading-relaxed text-foreground">
-              <Check className="mt-1 h-5 w-5 shrink-0 text-foreground" />
+            <li key={i} className="flex items-start gap-3 text-base leading-relaxed text-foreground">
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-foreground" />
               <span>{benefit}</span>
             </li>
           ))}

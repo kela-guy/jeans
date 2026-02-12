@@ -1,29 +1,28 @@
 export function SocialProofSection() {
   return (
-    <section className="flex flex-col gap-8 py-16">
-      <h2 className="font-sans text-3xl font-bold text-foreground md:text-4xl">
+    <section className="py-20">
+      <h2 className="text-2xl font-bold text-foreground md:text-3xl">
         {"וכולם יראו את זה!"}
       </h2>
 
-      <div className="flex flex-col gap-4 text-lg leading-relaxed text-foreground">
-        <p className="text-muted-foreground">
-          {"המשפט שחוזר אצלי מלקוחות לאחרונה:"}
-        </p>
-        <blockquote className="border-r-4 border-foreground pr-6 py-2">
-          <p className="font-sans text-2xl font-bold italic text-foreground md:text-3xl">
-            {"״לא מאמינים לי שירדתי בלי זריקות״"}
-          </p>
-        </blockquote>
-        <p className="font-bold text-xl">{"כי זה פשוט עובד."}</p>
-      </div>
+      <p className="mt-6 text-sm text-muted-foreground">
+        {"המשפט שחוזר אצלי מלקוחות לאחרונה:"}
+      </p>
 
-      <div className="flex flex-col gap-3 text-lg leading-relaxed text-foreground">
-        <p>
-          {"לקבל מחמאות מהסביבה ולסובב ראשים זה רק חלק ממה שהמשתתפות בתוכנית מתארות."}
+      {/* Big quote -- massive isolation to make it the centerpiece */}
+      <blockquote className="my-10 border-r-4 border-foreground pr-6 py-1">
+        <p className="text-2xl font-bold italic leading-snug text-foreground md:text-3xl text-balance">
+          {"״לא מאמינים לי שירדתי בלי זריקות״"}
         </p>
-        <p className="text-muted-foreground">
-          {"ברור לי שאת לא נרשמת בשביל זה, אבל זה תמיד נחמד."}
-        </p>
+      </blockquote>
+
+      <p className="text-lg font-bold text-foreground">
+        {"כי זה פשוט עובד."}
+      </p>
+
+      <div className="mt-8 flex flex-col gap-2 text-base leading-relaxed text-foreground">
+        <p>{"לקבל מחמאות מהסביבה ולסובב ראשים זה רק חלק ממה שהמשתתפות בתוכנית מתארות."}</p>
+        <p className="text-sm text-muted-foreground">{"ברור לי שאת לא נרשמת בשביל זה, אבל זה תמיד נחמד."}</p>
       </div>
     </section>
   )

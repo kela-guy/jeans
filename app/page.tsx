@@ -16,70 +16,42 @@ import { StickyCta } from "@/components/sales/sticky-cta"
 export default function Page() {
   return (
     <>
-      <main className="mx-auto max-w-2xl px-5 py-8 md:px-8 md:py-12">
+      <main className="mx-auto max-w-xl px-6 py-10 md:px-8 md:py-14">
         <HeroSection />
-
-        <div className="border-t border-border" />
         <ProblemSection />
-
-        <div className="border-t border-border" />
         <SolutionSection />
-
-        <div className="border-t border-border" />
         <SocialProofSection />
-
-        <div className="border-t border-border" />
         <PainAgitationSection />
-
-        <div className="border-t border-border" />
         <EnemySection />
-
-        <div className="border-t border-border" />
         <ScienceSection />
-
-        <div className="border-t border-border" />
         <OfferSection />
-
-        <div className="border-t border-border" />
         <PricingSection />
-
-        <div className="border-t border-border" />
         <SignupForm />
-
-        <div className="border-t border-border" />
         <TargetAudienceSection />
-
-        <div className="border-t border-border" />
         <FaqSection />
-
-        <div className="border-t border-border" />
         <AboutSection />
-
-        <div className="border-t border-border" />
         <SignupForm />
 
         {/* Surprise CTA */}
-        <div className="flex flex-col items-center gap-4 py-16 text-center">
-          <p className="font-sans text-xl font-bold text-foreground md:text-2xl">
+        <div className="flex flex-col items-center gap-3 py-20 text-center">
+          <p className="text-xl font-bold text-foreground md:text-2xl">
             {"הפתעה: רוצה לראות איך תיראי בסוף התוכנית?"}
           </p>
           <a
             href="#signup"
-            className="rounded bg-foreground px-8 py-4 text-lg font-bold text-primary-foreground transition-opacity hover:opacity-90"
+            className="mt-4 rounded bg-foreground px-8 py-4 text-base font-bold text-primary-foreground transition-opacity hover:opacity-90"
           >
             {"לחצי כאן"}
           </a>
         </div>
       </main>
 
-      <footer className="border-t border-border py-8 text-center text-sm text-muted-foreground">
+      <footer className="border-t border-border py-8 text-center text-xs text-muted-foreground">
         <p>{"כל הזכויות שמורות"}</p>
       </footer>
 
       <StickyCta />
-
-      {/* Spacer for sticky CTA */}
-      <div className="h-16" />
+      <div className="h-14" />
     </>
   )
 }

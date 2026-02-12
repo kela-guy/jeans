@@ -1,59 +1,57 @@
 export function ProblemSection() {
   return (
-    <section className="flex flex-col gap-12 py-16">
+    <section className="py-20">
       {/* Painful truth */}
-      <div className="flex flex-col gap-6">
-        <h2 className="font-sans text-3xl font-bold text-foreground md:text-4xl">
-          {"האמת הכואבת:"}
-        </h2>
-        <h3 className="font-sans text-xl font-bold leading-relaxed text-foreground md:text-2xl text-balance">
-          {"ככל שאת ״מקפידה״ יותר, כך את מתרחקת מבטן שטוחה"}
-        </h3>
-        <div className="flex flex-col gap-4 text-lg leading-relaxed text-foreground">
-          <p>
-            {"במקום להוריד את הבטן,"}
-            <br />
-            {"הגוף רק נכנס לסטרס"}
-            <br />
-            {"והסטרס הזה, דווקא גורם לו לאגור שומן"}
-          </p>
-        </div>
+      <p className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
+        {"האמת הכואבת:"}
+      </p>
 
-        {/* Stress triggers */}
-        <div className="flex flex-col gap-3 border-r-4 border-foreground pr-6">
-          <p className="text-lg leading-relaxed text-foreground">
-            <span className="font-bold">{"תפחיתי קלוריות,"}</span>{" "}
-            {"הוא ייכנס למצוקה ויחשוב שאין לו מזון"}
-          </p>
-          <p className="text-lg leading-relaxed text-foreground">
-            <span className="font-bold">{"תתאמני יותר,"}</span>{" "}
-            {"הוא ירגיש עומס ויצבור שומן שיעזור לו להתמודד"}
-          </p>
-          <p className="text-lg leading-relaxed text-foreground">
-            <span className="font-bold">{"תשני את התזונה באופן קיצוני,"}</span>{" "}
-            {"הוא יאגור שומן ויערך לגרוע מכל"}
-          </p>
-        </div>
+      <h2 className="mt-4 text-2xl font-bold leading-snug text-foreground md:text-3xl text-balance">
+        {"ככל שאת ״מקפידה״ יותר, כך את מתרחקת מבטן שטוחה"}
+      </h2>
+
+      <div className="mt-8 flex flex-col gap-1 text-base leading-relaxed text-foreground">
+        <p>{"במקום להוריד את הבטן,"}</p>
+        <p>{"הגוף רק נכנס לסטרס"}</p>
+        <p>{"והסטרס הזה, דווקא גורם לו לאגור שומן"}</p>
       </div>
 
-      {/* Empathy block */}
-      <div className="flex flex-col gap-4">
-        <p className="text-lg font-bold leading-relaxed text-foreground">
-          {"אני מאמין שאת עושה הכל נכון…"}
+      {/* Stress triggers -- generous top spacing to separate from intro */}
+      <div className="mt-12 flex flex-col gap-4 border-r-4 border-foreground pr-6">
+        <p className="text-base leading-relaxed text-foreground">
+          <span className="font-bold">{"תפחיתי קלוריות,"}</span>{" "}
+          {"הוא ייכנס למצוקה ויחשוב שאין לו מזון"}
         </p>
-        <div className="flex flex-col gap-2 text-lg leading-relaxed text-foreground">
+        <p className="text-base leading-relaxed text-foreground">
+          <span className="font-bold">{"תתאמני יותר,"}</span>{" "}
+          {"הוא ירגיש עומס ויצבור שומן שיעזור לו להתמודד"}
+        </p>
+        <p className="text-base leading-relaxed text-foreground">
+          <span className="font-bold">{"תשני את התזונה באופן קיצוני,"}</span>{" "}
+          {"הוא יאגור שומן ויערך לגרוע מכל"}
+        </p>
+      </div>
+
+      {/* Empathy block -- large top gap to create a new "beat" */}
+      <div className="mt-16">
+        <p className="text-lg font-bold text-foreground">
+          {"אני מאמין שאת עושה הכל נכון..."}
+        </p>
+
+        <div className="mt-6 flex flex-col gap-2 text-base leading-relaxed text-foreground">
           <p>{"ועדיין, סביר שלא תראי ירידה של השומן הבטני."}</p>
           <p>{"דיאטות שעבדו בעבר, לא עובדות היום"}</p>
-          <p>
-            {"למרות שאת מתמידה יותר מתמיד, רשומה לפילאטיס, יוגה, במודעות לגוף"}
-          </p>
-          <p className="font-bold">
-            {"ועדיין הפאוץ הזה תקוע שם, עקשן ולא רוצה לשחרר."}
-          </p>
-          <p className="text-muted-foreground italic">
-            {"הוא כבר הפך להיות חלק ממך."}
-          </p>
+          <p>{"למרות שאת מתמידה יותר מתמיד, רשומה לפילאטיס, יוגה, במודעות לגוף"}</p>
         </div>
+
+        {/* Key emotional line -- isolated with extra spacing */}
+        <p className="mt-8 text-xl font-bold leading-snug text-foreground">
+          {"ועדיין הפאוץ הזה תקוע שם, עקשן ולא רוצה לשחרר."}
+        </p>
+
+        <p className="mt-3 text-sm italic text-muted-foreground">
+          {"הוא כבר הפך להיות חלק ממך."}
+        </p>
       </div>
     </section>
   )

@@ -15,29 +15,29 @@ export function TargetAudienceSection() {
   ]
 
   return (
-    <section className="flex flex-col gap-10 py-16">
-      <div className="flex flex-col gap-6">
-        <h3 className="font-sans text-2xl font-bold text-foreground md:text-3xl">
+    <section className="py-20">
+      <div>
+        <h3 className="text-xl font-bold text-foreground md:text-2xl">
           {"למי זה מתאים"}
         </h3>
-        <ul className="flex flex-col gap-3">
+        <ul className="mt-6 flex flex-col gap-3">
           {forWhom.map((item, i) => (
-            <li key={i} className="flex items-start gap-3 text-lg leading-relaxed text-foreground">
-              <Check className="mt-1 h-5 w-5 shrink-0 text-foreground" />
+            <li key={i} className="flex items-start gap-3 text-base leading-relaxed text-foreground">
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-foreground" />
               <span>{item}</span>
             </li>
           ))}
         </ul>
       </div>
 
-      <div className="flex flex-col gap-6">
-        <h3 className="font-sans text-2xl font-bold text-foreground md:text-3xl">
+      <div className="mt-12">
+        <h3 className="text-xl font-bold text-foreground md:text-2xl">
           {"למי זה לא מתאים"}
         </h3>
-        <ul className="flex flex-col gap-3">
+        <ul className="mt-6 flex flex-col gap-3">
           {notFor.map((item, i) => (
-            <li key={i} className="flex items-start gap-3 text-lg leading-relaxed text-muted-foreground">
-              <X className="mt-1 h-5 w-5 shrink-0" />
+            <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
+              <X className="mt-0.5 h-4 w-4 shrink-0" />
               <span>{item}</span>
             </li>
           ))}
