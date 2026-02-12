@@ -38,11 +38,13 @@ export function SwitchIllustration() {
     const rect = el.getBoundingClientRect()
     const windowH = window.innerHeight
 
-    // Animation starts when element top hits bottom of viewport
-    // Animation ends when element bottom hits top of viewport
-    // This gives a full scroll range equal to (element height + viewport height)
-    const totalRange = rect.height + windowH
-    const scrolled = windowH - rect.top
+    // Animation starts when element top reaches 80% of viewport (20% from top)
+    // Animation ends when element bottom reaches 20% of viewport
+    const startThreshold = windowH * 0.8 // element top must reach here to start
+    const endThreshold = windowH * 0.2   // element bottom reaches here to finish
+
+    const totalRange = startThreshold - endThreshold + rect.height
+    const scrolled = startThreshold - rect.top
 
     const raw = scrolled / totalRange
     setProgress(clamp(raw, 0, 1))
