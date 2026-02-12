@@ -26,24 +26,7 @@ export default function Page() {
         <TargetAudienceSection />
         <FaqSection />
         <AboutSection />
-
-        {/* Surprise CTA */}
-        <div className="flex flex-col items-center gap-3 py-20 text-center">
-          <p className="text-xl font-bold text-foreground md:text-2xl">
-            {"הפתעה: רוצה לראות איך תיראי בסוף התוכנית?"}
-          </p>
-          <a
-            href="#pricing"
-            className="mt-4 rounded bg-foreground px-8 py-4 text-base font-bold text-primary-foreground transition-opacity hover:opacity-90"
-          >
-            {"לחצי כאן"}
-          </a>
-        </div>
       </main>
-
-      <footer className="border-t border-border py-8 text-center text-xs text-muted-foreground">
-        <p>{"כל הזכויות שמורות"}</p>
-      </footer>
 
       <StickyCta />
       <div className="h-14" />
