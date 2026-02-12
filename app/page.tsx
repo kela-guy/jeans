@@ -24,14 +24,6 @@ export default function Page() {
         <ScienceSection />
         <OfferSection />
         <TargetAudienceSection />
-
-        {/* Your checkout section -- replace this div with your Elementor checkout embed */}
-        <section id="pricing" className="py-20">
-          <div className="rounded border-2 border-dashed border-muted-foreground/30 px-6 py-16 text-center">
-            <p className="text-sm font-medium text-muted-foreground">{"אזור הצ׳קאאוט שלך יוכנס כאן"}</p>
-          </div>
-        </section>
-
         <FaqSection />
         <AboutSection />
 
