@@ -15,7 +15,7 @@ export function TargetAudienceSection() {
   ]
 
   return (
-    <section className="py-20">
+    <section className="py-10">
       <div>
         <h3 className="text-xl font-bold text-foreground md:text-2xl">
           {"למי זה מתאים"}

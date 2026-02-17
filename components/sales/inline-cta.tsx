@@ -1,3 +1,5 @@
+const GUARANTEE_LINE = "החזר כספי אם לא תראי תוצאות – ביטול פשוט"
+
 export function InlineCta({ text = "!אני רוצה להתחיל עכשיו" }: { text?: string }) {
   return (
     <div className="py-10 text-center">
@@ -8,7 +10,10 @@ export function InlineCta({ text = "!אני רוצה להתחיל עכשיו" }:
         {text}
       </a>
       <p className="mt-2 text-xs text-muted-foreground">
-        {"*מקומות מוגבלים"}
+        {"גישה מיידית – מתחילים היום"}
+      </p>
+      <p className="mt-1 text-xs font-medium text-foreground/80">
+        {GUARANTEE_LINE}
       </p>
     </div>
   )

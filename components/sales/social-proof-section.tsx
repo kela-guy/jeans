@@ -1,7 +1,7 @@
 export function SocialProofSection() {
   return (
-    <section className="py-20">
-      <h2 className="text-2xl font-bold text-foreground md:text-3xl">
+    <section className="py-10 pl-6 pr-5 md:pl-8 md:pr-6">
+      <h2 className="text-2xl font-bold tracking-normal text-foreground md:text-3xl">
         {"וכולם יראו את זה!"}
       </h2>
 

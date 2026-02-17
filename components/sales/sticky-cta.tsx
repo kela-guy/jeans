@@ -23,7 +23,7 @@ export function StickyCta() {
             {"הורידי 2 מידות תוך 21 יום"}
           </p>
           <p className="text-xs text-muted-foreground">
-            {"*מקומות מוגבלים"}
+            {"גישה מיידית • החזר כספי אם לא תראי תוצאות"}
           </p>
         </div>
         <a

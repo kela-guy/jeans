@@ -1,0 +1,356 @@
+<!-- שים את הבלוק הזה פעם אחת בראש העמוד או ב-Widget HTML ראשון -->
+<!-- גופנים, משתני עיצוב ו-Tailwind – חובה לטעינה לפני תוכן העמוד -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.375rem;
+    --font-rubik: 'Rubik', Arial, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-rubik); }
+  .text-balance { text-wrap: balance; }
+  .marker { background: linear-gradient(180deg, transparent 55%, rgba(253,224,71,0.45) 55%); padding-inline: 0.12em; border-radius: 2px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  /* כפיית Rubik על תוכן דף המכירה גם כשהתבנית משתלטת על הפונט */
+  .sales-page-rubik,
+  .sales-page-rubik * {
+    font-family: var(--font-rubik) !important;
+  }
+  /* סלקטורים חזקים יותר כדי לנצח תבניות וורדפרס שטוענות אחרי */
+  html body main.sales-page-rubik,
+  html body main.sales-page-rubik *,
+  html body div.sales-page-rubik,
+  html body div.sales-page-rubik *,
+  html body #scarcity-overlay,
+  html body #scarcity-overlay *,
+  html body #sticky-cta-bar,
+  html body #sticky-cta-bar * {
+    font-family: 'Rubik', Arial, sans-serif !important;
+  }
+  /* Bold → Demi Bold (600) לקריאות טובה יותר בעברית */
+  b, strong, .font-bold, .font-black { font-weight: 600; }
+  .font-extrabold { font-weight: 700; }
+  /* כפתור ה-CTA הדביק – טקסט לבן גם כשהתבנית משנה קישורים */
+  html body #sticky-cta-bar a,
+  html body #sticky-cta-bar #sticky-cta-btn {
+    color: #fff !important;
+  }
+  /* אנימציית כניסה של הפאנל הדביק מלמטה */
+  #sticky-cta-bar {
+    transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+    will-change: transform;
+  }
+  #sticky-cta-bar.sticky-cta-hidden {
+    transform: translateY(100%);
+    pointer-events: none;
+  }
+  /* דסקטופ: הגדלת בסיס הטקסט לקריאות */
+  @media (min-width: 768px) { html { font-size: 18px; } }
+  @media (min-width: 1024px) { html { font-size: 19px; } }
+</style>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          background: 'hsl(var(--background))',
+          foreground: 'hsl(var(--foreground))',
+          card: 'hsl(var(--card))',
+          'card-foreground': 'hsl(var(--card-foreground))',
+          primary: 'hsl(var(--primary))',
+          'primary-foreground': 'hsl(var(--primary-foreground))',
+          secondary: 'hsl(var(--secondary))',
+          muted: 'hsl(var(--muted))',
+          'muted-foreground': 'hsl(var(--muted-foreground))',
+          accent: 'hsl(var(--accent))',
+          border: 'hsl(var(--border))',
+          input: 'hsl(var(--input))',
+          ring: 'hsl(var(--ring))',
+        },
+        fontFamily: { sans: ['var(--font-rubik)', 'Arial', 'sans-serif'] },
+        borderRadius: {
+          lg: 'var(--radius)',
+          md: 'calc(var(--radius) - 2px)',
+          sm: 'calc(var(--radius) - 4px)',
+        },
+      },
+    },
+  };
+</script>
+
+<!-- Overlay מחסר (מופיע ב־90% גלילה) -->
+<div id="scarcity-overlay" class="scarcity-overlay sales-page-rubik" aria-modal="true" role="dialog" aria-label="מבצע מיוחד בשבילך" style="display: none; font-family: 'Rubik', Arial, sans-serif !important">
+  <div id="scarcity-overlay-mask" class="scarcity-overlay-mask">
+    <div id="scarcity-overlay-content" class="scarcity-overlay-content" dir="rtl">
+      <p class="text-lg leading-relaxed text-white/90">
+        שמנו לב שאכפת לך ממנה — ואכפת גם לנו.<br>
+        <span class="mt-2 block font-semibold text-white">הנה קוד קופון בשבילה:</span>
+      </p>
+      <div class="rounded-lg border border-white/20 bg-white/5 px-6 py-4">
+        <p class="text-xs uppercase tracking-wider text-white/60">קוד קופון</p>
+        <p class="mt-1 font-mono text-2xl font-bold tracking-widest text-white" dir="ltr">CARE21</p>
+      </div>
+      <p class="text-sm text-white/70">המבצע מוגבל בזמן — חזרי לעמוד והטיימר יופיע.</p>
+      <button type="button" id="scarcity-return-btn" class="rounded-lg bg-white px-6 py-3 text-base font-bold text-black hover:bg-white/90">חזרה להצעה</button>
+    </div>
+  </div>
+</div>
+
+<!-- ויגנט + טיימר (מופיעים אחרי לחיצה על "חזרה להצעה") -->
+<div id="scarcity-timer-wrap" style="display: none;">
+  <style>
+    @keyframes vignette-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .scarcity-vignette { position: fixed; inset: 0; z-index: 40; pointer-events: none; background: transparent; box-shadow: inset 0 0 120px 40px rgba(180, 0, 0, 0.12); }
+    .scarcity-vignette.blink { animation: vignette-blink 3s ease-in-out infinite; }
+    .scarcity-overlay { position: fixed; inset: 0; z-index: 100; background: black; transition: clip-path 0.5s ease-out; clip-path: circle(0% at 50% 50%); }
+    .scarcity-overlay.visible { clip-path: circle(150vmax at 50% 50%); }
+    .scarcity-overlay-mask { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .scarcity-overlay-content { max-width: 28rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; padding: 2.5rem 2rem; text-align: center; transition: opacity 0.3s; opacity: 0; }
+    .scarcity-overlay-content.visible { opacity: 1; }
+    #scarcity-timer-box { position: fixed; top: 5rem; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; flex-direction: column; align-items: center; gap: 0.125rem; padding: 0.625rem 1rem; border-radius: 0.75rem; border: 1px solid rgba(248,113,113,0.3); background: rgba(0,0,0,0.8); box-shadow: 0 10px 25px rgba(127,29,29,0.2); font-family: ui-monospace, monospace; }
+  </style>
+  <div class="scarcity-vignette blink" aria-hidden="true"></div>
+  <div id="scarcity-timer-box" class="scarcity-timer-box" dir="ltr">
+    <span class="text-[10px] font-medium uppercase tracking-wider text-red-400/90">נגמר בעוד</span>
+    <span id="scarcity-timer-display" class="text-lg font-bold tabular-nums text-red-100">00:14:59</span>
+  </div>
+</div>
+
+<script>
+(function() {
+  var SCROLL_THRESHOLD = 0.9;
+  var STICKY_CTA_SCROLL = 600;
+  var TIMER_START = { h: 0, m: 14, s: 59 };
+  var STORAGE_KEY = 'scarcityReturned';
+
+  var overlay, overlayContent, returnBtn, timerWrap, timerDisplay, stickyCta;
+
+  function init() {
+    overlay = document.getElementById('scarcity-overlay');
+    overlayContent = document.getElementById('scarcity-overlay-content');
+    returnBtn = document.getElementById('scarcity-return-btn');
+    timerWrap = document.getElementById('scarcity-timer-wrap');
+    timerDisplay = document.getElementById('scarcity-timer-display');
+    stickyCta = document.getElementById('sticky-cta-bar');
+  }
+
+  var returned = false;
+  var overlayShown = false;
+  var timerInterval = null;
+
+  function getScrollProgress() {
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    return docHeight > 0 ? scrollTop / docHeight : 0;
+  }
+
+  function showOverlay() {
+    if (overlayShown || !overlay) return;
+    overlayShown = true;
+    overlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        overlay.classList.add('visible');
+        setTimeout(function() { overlayContent && overlayContent.classList.add('visible'); }, 400);
+      });
+    });
+  }
+
+  function hideOverlayAndShowTimer() {
+    if (!overlay) return;
+    overlayContent && overlayContent.classList.remove('visible');
+    overlay.classList.remove('visible');
+    setTimeout(function() {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+      try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+      returned = true;
+      if (timerWrap) timerWrap.style.display = 'block';
+      startTimer();
+    }, 350);
+  }
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  function startTimer() {
+    var time = { h: TIMER_START.h, m: TIMER_START.m, s: TIMER_START.s };
+    function tick() {
+      time.s--;
+      if (time.s < 0) { time.s = 59; time.m--; }
+      if (time.m < 0) { time.m = 59; time.h--; }
+      if (time.h < 0) { time.h = 0; time.m = 0; time.s = 0; }
+      if (timerDisplay) timerDisplay.textContent = pad(time.h) + ':' + pad(time.m) + ':' + pad(time.s);
+    }
+    tick();
+    timerInterval = setInterval(tick, 1000);
+  }
+
+  function onScroll() {
+    if (!returned && getScrollProgress() >= SCROLL_THRESHOLD) showOverlay();
+    if (stickyCta) {
+      var y = window.pageYOffset || document.documentElement.scrollTop;
+      if (y > STICKY_CTA_SCROLL) stickyCta.classList.remove('sticky-cta-hidden');
+      else stickyCta.classList.add('sticky-cta-hidden');
+    }
+  }
+
+  function run() {
+    init();
+    /* ליד Debug: איפוס scarcity בכל רענון כדי לאפשר לבדוק את אנימציית הגלילה – להסיר כשעוברים ל-production */
+    try { sessionStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    try { if (sessionStorage.getItem(STORAGE_KEY) === '1') { returned = true; if (timerWrap) { timerWrap.style.display = 'block'; startTimer(); } } } catch (e) {}
+    if (returnBtn) returnBtn.addEventListener('click', hideOverlayAndShowTimer);
+    window.addEventListener('scroll', function() { onScroll(); }, { passive: true });
+    onScroll();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
+</script>
+
+<!-- אנימציית מתג לפי גלילה (כשהאלמנט נכנס למסך) -->
+<script>
+(function() {
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+  function updateSwitch() {
+    var switchEl = document.getElementById('switchIllustration');
+    if (!switchEl) return;
+    var track = document.getElementById('switchTrack');
+    var knob = document.getElementById('switchKnob');
+    var offLabel = document.getElementById('switchOffLabel');
+    var onLabel = document.getElementById('switchOnLabel');
+    var colOff = document.getElementById('switchColOff');
+    var colOn = document.getElementById('switchColOn');
+    var colOnTitle = document.getElementById('switchColOnTitle');
+    var colOnSub = document.getElementById('switchColOnSub');
+    var colOnFoot = document.getElementById('switchColOnFoot');
+    var onIcons = [document.getElementById('switchOnIcon1'), document.getElementById('switchOnIcon2'), document.getElementById('switchOnIcon3')];
+    var onTexts = [document.getElementById('switchOnText1'), document.getElementById('switchOnText2'), document.getElementById('switchOnText3')];
+    if (!track || !knob) return;
+
+    var rect = switchEl.getBoundingClientRect();
+    var windowH = window.innerHeight;
+    var elCenter = rect.top + rect.height / 2;
+    var startY = windowH * 0.65;
+    var endY = windowH * 0.35;
+    var raw = (startY - elCenter) / (startY - endY);
+    var progress = clamp(raw, 0, 1);
+
+    var eased = progress < 0.5
+      ? 2 * progress * progress
+      : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+    var trackLight = lerp(85, 25, eased);
+    var knobLight = lerp(30, 96, eased);
+    var knobRight = lerp(6, 58, eased);
+    track.style.backgroundColor = 'hsl(0,0%,' + trackLight + '%)';
+    knob.style.backgroundColor = 'hsl(0,0%,' + knobLight + '%)';
+    knob.style.right = knobRight + '%';
+    if (offLabel) offLabel.style.color = 'hsl(0,0%,' + lerp(55, 75, eased) + '%)';
+    if (onLabel) onLabel.style.color = 'hsl(0,0%,' + lerp(35, 96, eased) + '%)';
+
+    var offOpacity = clamp(lerp(1, 0.3, eased), 0, 1);
+    var offScale = lerp(1, 0.96, eased);
+    var onOpacity = clamp(lerp(0.3, 1, eased), 0, 1);
+    var onScale = lerp(0.96, 1, eased);
+
+    if (colOff) {
+      colOff.style.opacity = offOpacity;
+      colOff.style.transform = 'scale(' + offScale + ')';
+      colOff.style.backgroundColor = 'hsl(0,0%,' + lerp(95, 97, eased) + '%)';
+    }
+    if (colOn) {
+      colOn.style.opacity = onOpacity;
+      colOn.style.transform = 'scale(' + onScale + ')';
+      colOn.style.backgroundColor = 'hsl(0,0%,' + lerp(97, 8, eased) + '%)';
+      colOn.style.borderColor = 'hsl(0,0%,' + lerp(90, 20, eased) + '%)';
+    }
+    var iconColor = 'hsl(0,0%,' + lerp(55, 85, eased) + '%)';
+    var textColor = 'hsl(0,0%,' + lerp(55, 92, eased) + '%)';
+    if (colOnTitle) colOnTitle.style.color = iconColor;
+    if (colOnSub) colOnSub.style.color = 'hsl(0,0%,' + lerp(55, 70, eased) + '%)';
+    if (colOnFoot) {
+      colOnFoot.style.color = 'hsl(0,0%,' + lerp(55, 90, eased) + '%)';
+      colOnFoot.style.opacity = onOpacity;
+    }
+    for (var i = 0; i < 3; i++) {
+      if (onIcons[i]) onIcons[i].style.color = iconColor;
+      if (onTexts[i]) onTexts[i].style.color = textColor;
+    }
+  }
+
+  function run() {
+    updateSwitch();
+    window.addEventListener('scroll', updateSwitch, { passive: true });
+    window.addEventListener('resize', updateSwitch, { passive: true });
+    window.addEventListener('load', updateSwitch);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
+</script>
+
+<!-- כפיית Rubik – נטען אחרון בתוך הבלוק כדי לנצח תבנית וורדפרס -->
+<style>
+  html body main.sales-page-rubik,
+  html body main.sales-page-rubik *,
+  html body div.sales-page-rubik,
+  html body div.sales-page-rubik *,
+  html body #scarcity-overlay,
+  html body #scarcity-overlay *,
+  html body #sticky-cta-bar,
+  html body #sticky-cta-bar * {
+    font-family: 'Rubik', Arial, sans-serif !important;
+  }
+  html body #sticky-cta-bar a,
+  html body #sticky-cta-bar #sticky-cta-btn {
+    color: #fff !important;
+  }
+</style>
+<script>
+  (function() {
+    function forceRubik() {
+      var rubik = "'Rubik', Arial, sans-serif";
+      var sel = "main.sales-page-rubik, main.sales-page-rubik *, div.sales-page-rubik, div.sales-page-rubik *, #scarcity-overlay, #scarcity-overlay *, #sticky-cta-bar, #sticky-cta-bar *";
+      try {
+        document.querySelectorAll(sel).forEach(function(el) {
+          el.style.setProperty("font-family", rubik, "important");
+        });
+        var stickyBtn = document.getElementById("sticky-cta-btn");
+        if (stickyBtn) stickyBtn.style.setProperty("color", "#fff", "important");
+      } catch (e) {}
+    }
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", forceRubik);
+    } else {
+      forceRubik();
+    }
+    window.addEventListener("load", forceRubik);
+  })();
+</script>

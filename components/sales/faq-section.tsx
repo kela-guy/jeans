@@ -30,7 +30,7 @@ export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section className="py-20">
+    <section className="py-10">
       <h2 className="text-2xl font-bold text-foreground md:text-3xl">
         {"שאלות ותשובות"}
       </h2>

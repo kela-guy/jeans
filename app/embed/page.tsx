@@ -25,7 +25,7 @@ export default function EmbedPage() {
       <PricingSection />
 
       {/* CTA PLACEHOLDER -- replace href with your Elementor checkout link */}
-      <section className="py-20" id="signup">
+      <section className="py-10" id="signup">
         <div className="text-center">
           <a
             href="#"
@@ -41,7 +41,7 @@ export default function EmbedPage() {
       <AboutSection />
 
       {/* Second CTA */}
-      <section className="py-20">
+      <section className="py-10">
         <div className="text-center">
           <a
             href="#"

@@ -40,7 +40,7 @@ export function SignupForm() {
   }
 
   return (
-    <section className="py-20" id="signup">
+    <section className="py-10" id="signup">
       <h2 className="text-center text-2xl font-bold text-foreground md:text-3xl">
         {"טופס הרשמה"}
       </h2>
