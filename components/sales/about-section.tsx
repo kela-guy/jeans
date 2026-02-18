@@ -1,3 +1,10 @@
+import Image from "next/image"
+import { TestimonialImage } from "./testimonial-image"
+import { TESTIMONIALS, TESTIMONIAL_INDEX } from "@/lib/testimonials"
+
+const AVIV_IMAGE =
+  "https://www.stayyoung.live/wp-content/uploads/2024/05/aviv-bellyfat.png"
+
 export function AboutSection() {
   return (
     <section className="py-10">
@@ -8,10 +15,17 @@ export function AboutSection() {
         {"אביב, נעים להכיר:"}
       </h2>
 
+      <div className="mt-6 w-full overflow-hidden rounded-lg">
+        <Image
+          src={AVIV_IMAGE}
+          alt="אביב"
+          width={800}
+          height={600}
+          className="h-auto w-full object-cover"
+        />
+      </div>
+
       <div className="mt-8 flex flex-col gap-8 md:flex-row md:items-start">
-        <div className="mx-auto h-56 w-56 shrink-0 rounded border border-border bg-muted flex items-center justify-center md:mx-0">
-          <span className="text-xs text-muted-foreground">{"[תמונה של אביב]"}</span>
-        </div>
         <div className="flex flex-col gap-4 text-base leading-relaxed text-foreground">
           <p>
             {"אני יכול לספר לך שאני כבר מעל ל12 שנה בתחום, מוכר מאוד בישראל ועברו אצלי "}
@@ -36,6 +50,10 @@ export function AboutSection() {
             {" ניפגש אנחנו כבר בקורס!"}
           </p>
         </div>
+      </div>
+
+      <div className="mt-10">
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.about]} />
       </div>
     </section>
   )

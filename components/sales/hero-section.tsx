@@ -1,4 +1,7 @@
+import Image from "next/image"
 import { ArrowDown } from "lucide-react"
+import { TestimonialImage } from "./testimonial-image"
+import { TESTIMONIALS, TESTIMONIAL_INDEX } from "@/lib/testimonials"
 
 export function HeroSection() {
   return (
@@ -24,6 +27,15 @@ export function HeroSection() {
           <span className="marker font-semibold">{"מתג שריפת השומן"}</span>
           {". ברגע שתעשי את זה הגוף ישחרר את השומן הבטני, יוריד את הנפיחות ויאפשר לך לרדת 2 מידות בקלות."}
         </p>
+        <div className="w-full max-w-[21rem] rounded-lg overflow-hidden">
+          <Image
+            src="https://www.stayyoung.live/wp-content/uploads/2026/02/2size-jeans-image.png"
+            alt="הגוף ישחרר את השומן הבטני - ג׳ינס ומידות"
+            width={396}
+            height={297}
+            className="w-full h-auto object-cover"
+          />
+        </div>
         <p className="text-xl font-bold leading-snug text-foreground md:text-2xl">
           {"מהו המתג? ולמה פספסתי אותו עד היום?"}
         </p>
@@ -36,11 +48,6 @@ export function HeroSection() {
         {"[ללא תפריטים, ללא חדר כושר, ללא הרעבה]"}
       </p>
 
-      {/* Hero image placeholder */}
-      <div className="mt-12 mx-auto h-72 w-full max-w-xl rounded-md border-2 border-border bg-muted flex items-center justify-center md:h-96">
-        <span className="text-sm text-muted-foreground">{"[תמונה ראשית]"}</span>
-      </div>
-
       <p className="mt-4 text-center text-xs font-medium text-muted-foreground">
         {"אביב גיל: המומחה הגדול בישראל להורדת השומן הבטני"}
       </p>
@@ -50,6 +57,11 @@ export function HeroSection() {
         <span className="marker text-foreground">{"לא מתוך מאמץ, אלא מתוך הרפיה"}</span>
         {"."}
       </p>
+
+      <div className="mt-10 flex w-full max-w-xl flex-col gap-6">
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.hero[0]]} />
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.hero[1]]} />
+      </div>
 
       <ArrowDown className="mt-10 h-5 w-5 animate-bounce text-muted-foreground" />
     </section>

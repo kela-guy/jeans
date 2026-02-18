@@ -1,3 +1,6 @@
+import { TestimonialImage } from "./testimonial-image"
+import { TESTIMONIALS, TESTIMONIAL_INDEX } from "@/lib/testimonials"
+
 export function ScienceSection() {
   return (
     <section className="py-10">
@@ -22,7 +25,7 @@ export function ScienceSection() {
         <span className="marker">{"הורמון האינסולין"}</span>
       </p>
 
-      <p className="mt-10 rounded bg-foreground px-6 py-3 text-center text-sm font-bold text-primary-foreground md:text-base">
+      <p className="mt-10 rounded-lg border-2 border-black bg-transparent px-6 py-4 text-center text-base font-bold text-foreground shadow-md md:text-lg">
         {"ואני מאתגר אתכן למצוא רופא או חוקר שלא יסכים איתי!"}
       </p>
 
@@ -54,6 +57,10 @@ export function ScienceSection() {
       <p className="mt-2 text-sm text-muted-foreground">
         {"אנחנו רק מתרחקים מהמטרה."}
       </p>
+
+      <div className="mt-10">
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.science]} />
+      </div>
     </section>
   )
 }

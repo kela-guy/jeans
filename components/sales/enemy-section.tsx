@@ -1,3 +1,6 @@
+import { TestimonialImage } from "./testimonial-image"
+import { TESTIMONIALS, TESTIMONIAL_INDEX } from "@/lib/testimonials"
+
 export function EnemySection() {
   return (
     <section className="py-10">
@@ -93,6 +96,10 @@ export function EnemySection() {
         <p>{"אני לא יודע אם הם עושים את זה בכוונה או בטעות"}</p>
         <p>{"האמת היא שכל אחד מהם יכול להמציא ״שיטה״"}</p>
         <p>{"כל אחד יכול לספר, למה זה עבד עבורו ולמה זה ״בטוח יעבוד עבורך."}</p>
+      </div>
+
+      <div className="mt-10">
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.enemy]} />
       </div>
     </section>
   )

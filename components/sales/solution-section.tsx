@@ -1,5 +1,7 @@
 import { Check } from "lucide-react"
 import { SwitchIllustration } from "./switch-illustration"
+import { TestimonialImage } from "./testimonial-image"
+import { TESTIMONIALS, TESTIMONIAL_INDEX } from "@/lib/testimonials"
 
 export function SolutionSection() {
   const switchOnBenefits = [
@@ -73,6 +75,11 @@ export function SolutionSection() {
             </li>
           ))}
         </ul>
+      </div>
+
+      <div className="mt-10 flex flex-col gap-6">
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.solution[0]]} />
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.solution[1]]} />
       </div>
     </section>
   )

@@ -1,5 +1,29 @@
 <!-- דף האפסאל – גלובל: שים פעם אחת בראש העמוד -->
 <!-- גופנים, משתני עיצוב ו-Tailwind – חובה לטעינה לפני תוכן העמוד -->
+
+<!-- Meta Pixel (dual). If fbevents.js is blocked (e.g. ad blocker), test in incognito or proxy the script from your server. -->
+<script>
+(function() {
+  var f = window, b = document, n = 'fbq';
+  if (f[n]) return;
+  var q = f[n] = function() { q.callMethod ? q.callMethod.apply(q, arguments) : q.queue.push(arguments); };
+  if (!f._fbq) f._fbq = q;
+  q.push = q;
+  q.loaded = true;
+  q.version = '2.0';
+  q.queue = [];
+  q('init', '514085094289807');
+  q('init', '1421449262682199');
+  q('track', 'PageView');
+})();
+</script>
+<script src="https://connect.facebook.net/en_US/fbevents.js" async defer></script>
+<noscript>
+  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=514085094289807&ev=PageView&noscript=1" alt="" />
+  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1421449262682199&ev=PageView&noscript=1" alt="" />
+</noscript>
+<!-- End Meta Pixel -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -32,9 +56,12 @@
     font-family: var(--font-rubik) !important;
   }
   html body main.upsell-page-rubik,
-  html body main.upsell-page-rubik * {
+  html body main.upsell-page-rubik *,
+  html body div.upsell-page-rubik,
+  html body div.upsell-page-rubik * {
     font-family: 'Rubik', Arial, sans-serif !important;
   }
+  /* Bold → Demi Bold (600) לקריאות טובה יותר בעברית */
   b, strong, .font-bold, .font-black { font-weight: 600; }
   .font-extrabold { font-weight: 700; }
   @media (min-width: 768px) { html { font-size: 18px; } }
@@ -75,7 +102,9 @@
 <!-- כפיית Rubik – נטען אחרון בתוך הבלוק -->
 <style>
   html body main.upsell-page-rubik,
-  html body main.upsell-page-rubik * {
+  html body main.upsell-page-rubik *,
+  html body div.upsell-page-rubik,
+  html body div.upsell-page-rubik * {
     font-family: 'Rubik', Arial, sans-serif !important;
   }
 </style>
@@ -83,8 +112,9 @@
   (function() {
     function forceRubik() {
       var rubik = "'Rubik', Arial, sans-serif";
+      var sel = "main.upsell-page-rubik, main.upsell-page-rubik *, div.upsell-page-rubik, div.upsell-page-rubik *";
       try {
-        document.querySelectorAll("main.upsell-page-rubik, main.upsell-page-rubik *").forEach(function(el) {
+        document.querySelectorAll(sel).forEach(function(el) {
           el.style.setProperty("font-family", rubik, "important");
         });
       } catch (e) {}
@@ -172,6 +202,32 @@
     return 22 + Math.random() * 28;                          /* letter/default */
   }
 
+  /* Same as TypingReveal getSoundIndices – only play typing sound at word start + mid (2 per word), not every char. */
+  function getSoundIndices(text, soundsPerWord) {
+    var set = {};
+    if (!soundsPerWord || soundsPerWord <= 0) return set;
+    var wordStart = -1;
+    for (var i = 0; i <= text.length; i++) {
+      var isWordChar = i < text.length && !/[\s\n]/.test(text[i]);
+      if (isWordChar) {
+        if (wordStart === -1) wordStart = i;
+      } else {
+        if (wordStart !== -1) {
+          var wordLen = i - wordStart;
+          set[wordStart] = true;
+          if (soundsPerWord > 1 && wordLen > 1) set[wordStart + Math.ceil(wordLen / 2)] = true;
+          wordStart = -1;
+        }
+      }
+    }
+    if (wordStart !== -1) {
+      var wordLen = text.length - wordStart;
+      set[wordStart] = true;
+      if (soundsPerWord > 1 && wordLen > 1) set[wordStart + Math.ceil(wordLen / 2)] = true;
+    }
+    return set;
+  }
+
   function getHighlightRanges(text, phrases) {
     var ranges = [];
     for (var i = 0; i < phrases.length; i++) {
@@ -218,7 +274,7 @@
     return out.join("");
   }
 
-  function runBlock(blockEl, text, highlights, delayScale, onDone) {
+  function runBlock(blockEl, text, highlights, delayScale, soundIndices, onDone) {
     var container = blockEl;
     var len = text.length;
     var visible = 0;
@@ -229,7 +285,7 @@
         if (onDone) onDone();
         return;
       }
-      playTypingTap();  /* one tap per character, same as TypingReveal in typing-reveal.tsx */
+      if (soundIndices[visible]) playTypingTap();
       visible++;
       var visibleStr = text.slice(0, visible);
       container.innerHTML = renderWithHighlights(visibleStr, getHighlightRanges(visibleStr, highlights || [])) + "<span class=\"upsell-cursor\" aria-hidden=\"true\">|</span>";
@@ -255,8 +311,10 @@
     var naturalMs = totalChars * AVG_MS_PER_CHAR;
     var targetMs = TARGET_DURATION_SEC * 1000;
     var delayScale = targetMs / naturalMs;
+    if (delayScale < 1) delayScale = 1;
 
     var index = 0;
+    var SOUNDS_PER_WORD = 2;
     function runNext() {
       if (index >= blocks.length) return;
       var el = blocks[index];
@@ -264,8 +322,9 @@
       var highlightsJson = el.getAttribute("data-highlights");
       var highlights = [];
       try { if (highlightsJson) highlights = JSON.parse(highlightsJson); } catch (e) {}
+      var soundIndices = getSoundIndices(text, SOUNDS_PER_WORD);
       index++;
-      runBlock(el, text, highlights, delayScale, runNext);
+      runBlock(el, text, highlights, delayScale, soundIndices, runNext);
     }
     runNext();
   }

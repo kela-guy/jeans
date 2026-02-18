@@ -1,3 +1,6 @@
+import { TestimonialImage } from "./testimonial-image"
+import { TESTIMONIALS, TESTIMONIAL_INDEX } from "@/lib/testimonials"
+
 export function PainAgitationSection() {
   return (
     <section className="py-10">
@@ -41,6 +44,10 @@ export function PainAgitationSection() {
         <span className="marker text-foreground/90">{"למנגנון הכי פשוט והישרדותי בגוף"}</span>
         {"."}
       </p>
+
+      <div className="mt-10">
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.painAgitation]} />
+      </div>
     </section>
   )
 }

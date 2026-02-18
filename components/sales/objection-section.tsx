@@ -1,3 +1,6 @@
+import { TestimonialImage } from "./testimonial-image"
+import { TESTIMONIALS, TESTIMONIAL_INDEX } from "@/lib/testimonials"
+
 export function ObjectionSection() {
   return (
     <section className="py-10">
@@ -21,6 +24,10 @@ export function ObjectionSection() {
           <span className="marker">{"אנחנו שם לספק לך את המענה שאת צריכה"}</span>
           {"."}
         </p>
+      </div>
+
+      <div className="mt-10">
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.objection]} />
       </div>
     </section>
   )

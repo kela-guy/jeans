@@ -1,4 +1,6 @@
 import { Check } from "lucide-react"
+import { TestimonialImage } from "./testimonial-image"
+import { TESTIMONIALS, TESTIMONIAL_INDEX } from "@/lib/testimonials"
 
 const WEEK1_BULLETS = [
   "לא נתמקד ב״מה״ וב״כמה״ כמו בשיטות אחרות, אלא ב״איך״ לאכול ו״מתי״",
@@ -54,7 +56,7 @@ export function OfferSection() {
         <p className="mt-4 text-base leading-relaxed text-foreground">
           {"ברגע שאת משלמת ומצטרפת את מגיעה ישר לאפליקציה שלנו שם ייפתח הקורס. כל יום נפתח שיעור חדש של עד 7 דקות. 21 שיעורים - 21 ימים שיבילו אותך כל הדרך ל2 מידות פחות בג׳ינס."}
         </p>
-        <p className="mt-4 text-base font-bold text-foreground">
+        <p className="mt-6 text-base font-bold text-foreground">
           <span className="marker">{"אין לנו תפריטים, לא סופרים קלוריות, לא משנים לך את התזונה"}</span>
         </p>
         <p className="mt-4 text-base leading-relaxed text-foreground">
@@ -197,6 +199,11 @@ export function OfferSection() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="mt-14 flex flex-col gap-6">
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.offer[0]]} />
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.offer[1]]} />
       </div>
     </section>
   )

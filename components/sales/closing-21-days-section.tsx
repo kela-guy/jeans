@@ -1,3 +1,6 @@
+import { TestimonialImage } from "./testimonial-image"
+import { TESTIMONIALS, TESTIMONIAL_INDEX } from "@/lib/testimonials"
+
 export function Closing21DaysSection() {
   return (
     <section className="py-10">
@@ -30,6 +33,10 @@ export function Closing21DaysSection() {
           <span className="marker">{"הרגע שלך הגיע"}</span>
           {"."}
         </p>
+      </div>
+
+      <div className="mt-10">
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.closing21Days]} />
       </div>
     </section>
   )

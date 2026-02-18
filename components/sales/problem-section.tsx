@@ -1,3 +1,6 @@
+import { TestimonialImage } from "./testimonial-image"
+import { TESTIMONIALS, TESTIMONIAL_INDEX } from "@/lib/testimonials"
+
 export function ProblemSection() {
   return (
     <section className="py-10 pl-5 pr-6 md:pl-6 md:pr-8">
@@ -55,6 +58,10 @@ export function ProblemSection() {
         <p className="mt-2 text-sm italic text-muted-foreground">
           {"הוא כבר הפך להיות חלק ממך."}
         </p>
+      </div>
+
+      <div className="mt-10">
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.problem]} />
       </div>
     </section>
   )

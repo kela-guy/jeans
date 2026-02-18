@@ -1,5 +1,29 @@
 <!-- שים את הבלוק הזה פעם אחת בראש העמוד או ב-Widget HTML ראשון -->
 <!-- גופנים, משתני עיצוב ו-Tailwind – חובה לטעינה לפני תוכן העמוד -->
+
+<!-- Meta Pixel (dual). If fbevents.js is blocked (e.g. ad blocker), test in incognito or proxy the script from your server. -->
+<script>
+(function() {
+  var f = window, b = document, n = 'fbq';
+  if (f[n]) return;
+  var q = f[n] = function() { q.callMethod ? q.callMethod.apply(q, arguments) : q.queue.push(arguments); };
+  if (!f._fbq) f._fbq = q;
+  q.push = q;
+  q.loaded = true;
+  q.version = '2.0';
+  q.queue = [];
+  q('init', '514085094289807');
+  q('init', '1421449262682199');
+  q('track', 'PageView');
+})();
+</script>
+<script src="https://connect.facebook.net/en_US/fbevents.js" async defer></script>
+<noscript>
+  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=514085094289807&ev=PageView&noscript=1" alt="" />
+  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1421449262682199&ev=PageView&noscript=1" alt="" />
+</noscript>
+<!-- End Meta Pixel -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -95,41 +119,56 @@
   };
 </script>
 
-<!-- Overlay מחסר (מופיע ב־90% גלילה) -->
+<!-- Overlay מחסר (מופיע ב־90% גלילה): ראשית "עצרי!" 2 שניות, אחר כך תוכן + קופון CARE10 + כפתור 5 דקות -->
 <div id="scarcity-overlay" class="scarcity-overlay sales-page-rubik" aria-modal="true" role="dialog" aria-label="מבצע מיוחד בשבילך" style="display: none; font-family: 'Rubik', Arial, sans-serif !important">
   <div id="scarcity-overlay-mask" class="scarcity-overlay-mask">
     <div id="scarcity-overlay-content" class="scarcity-overlay-content" dir="rtl">
-      <p class="text-lg leading-relaxed text-white/90">
-        שמנו לב שאכפת לך ממנה — ואכפת גם לנו.<br>
-        <span class="mt-2 block font-semibold text-white">הנה קוד קופון בשבילה:</span>
-      </p>
-      <div class="rounded-lg border border-white/20 bg-white/5 px-6 py-4">
-        <p class="text-xs uppercase tracking-wider text-white/60">קוד קופון</p>
-        <p class="mt-1 font-mono text-2xl font-bold tracking-widest text-white" dir="ltr">CARE21</p>
+      <p id="scarcity-headline-only" class="scarcity-headline-only text-7xl md:text-8xl font-black tracking-tight text-white transition-opacity duration-300">עצרי!</p>
+      <div id="scarcity-rest-content" class="scarcity-rest-content flex flex-col items-center gap-5 max-w-md text-center transition-opacity duration-300" style="opacity: 0; position: absolute; pointer-events: none;">
+        <p class="text-base leading-relaxed text-white/90">
+          את מספיק זמן בעמוד כדי שאני אבין<br>
+          <span class="font-semibold text-white">שהבריאות שלך חשובה לך!</span>
+        </p>
+        <p class="text-xl font-semibold text-white">הבריאות שלך חשובה גם לי ❤️</p>
+        <p class="text-lg font-bold leading-snug text-white">עכשיו זה הזמן לקבל החלטה<br>שתקדם את הבריאות והנראות שלך!</p>
+        <p class="text-sm text-white/80">כדי לעודד אותך לקבל החלטה</p>
+        <p class="text-base font-medium text-white">קחי מייד קוד קופון של 10 אחוז הנחה</p>
+        <div class="rounded-lg border border-white/20 bg-white/5 px-6 py-4">
+          <p class="font-mono text-2xl font-bold tracking-widest text-white" dir="ltr">CARE10</p>
+        </div>
+        <p class="text-sm text-white/80 leading-relaxed">תעתיקי את הקופון בלחיצה עליו,<br>או שתזכרי אותו בעל פה.</p>
+        <p class="text-lg font-semibold text-white pt-1">את מוכנה?</p>
+        <button type="button" id="scarcity-return-btn" class="flex flex-col h-auto w-full max-w-[400px] rounded-xl bg-blue-600 hover:bg-blue-700 px-4 py-3 text-xl font-semibold text-white">
+          <span>ברגע שתלחצי כאן</span>
+          <span>יש לך 5 דקות בדיוק לממש את ההטבה</span>
+        </button>
+        <p class="text-xs text-white/60 leading-relaxed">*שימי לב<br>הקופון פעיל ל5 דקות בדיוק מהרגע שלחצת על הכפתור למעלה.</p>
       </div>
-      <p class="text-sm text-white/70">המבצע מוגבל בזמן — חזרי לעמוד והטיימר יופיע.</p>
-      <button type="button" id="scarcity-return-btn" class="rounded-lg bg-white px-6 py-3 text-base font-bold text-black hover:bg-white/90">חזרה להצעה</button>
     </div>
   </div>
 </div>
 
-<!-- ויגנט + טיימר (מופיעים אחרי לחיצה על "חזרה להצעה") -->
+<!-- ויגנט + טיימר (מופיעים אחרי לחיצה על הכפתור – 5 דקות לממש הקופון CARE10) -->
 <div id="scarcity-timer-wrap" style="display: none;">
   <style>
     @keyframes vignette-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     .scarcity-vignette { position: fixed; inset: 0; z-index: 40; pointer-events: none; background: transparent; box-shadow: inset 0 0 120px 40px rgba(180, 0, 0, 0.12); }
-    .scarcity-vignette.blink { animation: vignette-blink 3s ease-in-out infinite; }
+    .scarcity-vignette.blink { animation: vignette-blink 4s ease-in-out infinite; }
     .scarcity-overlay { position: fixed; inset: 0; z-index: 100; background: black; transition: clip-path 0.5s ease-out; clip-path: circle(0% at 50% 50%); }
     .scarcity-overlay.visible { clip-path: circle(150vmax at 50% 50%); }
     .scarcity-overlay-mask { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
     .scarcity-overlay-content { max-width: 28rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; padding: 2.5rem 2rem; text-align: center; transition: opacity 0.3s; opacity: 0; }
     .scarcity-overlay-content.visible { opacity: 1; }
-    #scarcity-timer-box { position: fixed; top: 5rem; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; flex-direction: column; align-items: center; gap: 0.125rem; padding: 0.625rem 1rem; border-radius: 0.75rem; border: 1px solid rgba(248,113,113,0.3); background: rgba(0,0,0,0.8); box-shadow: 0 10px 25px rgba(127,29,29,0.2); font-family: ui-monospace, monospace; }
+    .scarcity-rest-content.visible { opacity: 1 !important; position: relative !important; pointer-events: auto !important; }
+    .scarcity-headline-only.hidden { opacity: 0; position: absolute; pointer-events: none; }
+    #scarcity-timer-box { position: fixed; top: 5rem; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 0.75rem 1rem; border-radius: 0.75rem; border: 1px solid rgba(248,113,113,0.3); background: rgba(0,0,0,0.8); box-shadow: 0 10px 25px rgba(127,29,29,0.2); font-family: ui-monospace, monospace; }
   </style>
   <div class="scarcity-vignette blink" aria-hidden="true"></div>
   <div id="scarcity-timer-box" class="scarcity-timer-box" dir="ltr">
-    <span class="text-[10px] font-medium uppercase tracking-wider text-red-400/90">נגמר בעוד</span>
-    <span id="scarcity-timer-display" class="text-lg font-bold tabular-nums text-red-100">00:14:59</span>
+    <span class="text-[10px] font-medium uppercase tracking-wider text-red-400/90">הקופון:</span>
+    <span class="font-mono text-xl font-bold tracking-widest text-white">CARE10</span>
+    <span class="text-[10px] text-white/80">בתוקף עד</span>
+    <span id="scarcity-timer-display" class="text-lg font-bold tabular-nums text-red-100">05:00</span>
   </div>
 </div>
 
@@ -137,14 +176,19 @@
 (function() {
   var SCROLL_THRESHOLD = 0.9;
   var STICKY_CTA_SCROLL = 600;
-  var TIMER_START = { h: 0, m: 14, s: 59 };
+  var HEADLINE_ONLY_MS = 2000;
+  var CONTENT_FADE_DELAY_MS = 400;
+  var TIMER_START_MINUTES = 5;
+  var TIMER_START_SECONDS = 0;
   var STORAGE_KEY = 'scarcityReturned';
 
-  var overlay, overlayContent, returnBtn, timerWrap, timerDisplay, stickyCta;
+  var overlay, overlayContent, headlineOnly, restContent, returnBtn, timerWrap, timerDisplay, stickyCta;
 
   function init() {
     overlay = document.getElementById('scarcity-overlay');
     overlayContent = document.getElementById('scarcity-overlay-content');
+    headlineOnly = document.getElementById('scarcity-headline-only');
+    restContent = document.getElementById('scarcity-rest-content');
     returnBtn = document.getElementById('scarcity-return-btn');
     timerWrap = document.getElementById('scarcity-timer-wrap');
     timerDisplay = document.getElementById('scarcity-timer-display');
@@ -166,17 +210,26 @@
     overlayShown = true;
     overlay.style.display = 'block';
     document.body.style.overflow = 'hidden';
+    if (headlineOnly) headlineOnly.classList.remove('hidden');
+    if (restContent) restContent.classList.remove('visible');
     requestAnimationFrame(function() {
       requestAnimationFrame(function() {
         overlay.classList.add('visible');
-        setTimeout(function() { overlayContent && overlayContent.classList.add('visible'); }, 400);
+        setTimeout(function() {
+          if (overlayContent) overlayContent.classList.add('visible');
+          setTimeout(function() {
+            if (headlineOnly) headlineOnly.classList.add('hidden');
+            if (restContent) restContent.classList.add('visible');
+          }, HEADLINE_ONLY_MS);
+        }, CONTENT_FADE_DELAY_MS);
       });
     });
   }
 
   function hideOverlayAndShowTimer() {
     if (!overlay) return;
-    overlayContent && overlayContent.classList.remove('visible');
+    if (overlayContent) overlayContent.classList.remove('visible');
+    if (restContent) restContent.classList.remove('visible');
     overlay.classList.remove('visible');
     setTimeout(function() {
       overlay.style.display = 'none';
@@ -191,13 +244,13 @@
   function pad(n) { return (n < 10 ? '0' : '') + n; }
 
   function startTimer() {
-    var time = { h: TIMER_START.h, m: TIMER_START.m, s: TIMER_START.s };
+    var minutes = TIMER_START_MINUTES;
+    var seconds = TIMER_START_SECONDS;
     function tick() {
-      time.s--;
-      if (time.s < 0) { time.s = 59; time.m--; }
-      if (time.m < 0) { time.m = 59; time.h--; }
-      if (time.h < 0) { time.h = 0; time.m = 0; time.s = 0; }
-      if (timerDisplay) timerDisplay.textContent = pad(time.h) + ':' + pad(time.m) + ':' + pad(time.s);
+      if (timerDisplay) timerDisplay.textContent = pad(minutes) + ':' + pad(seconds);
+      seconds--;
+      if (seconds < 0) { seconds = 59; minutes--; }
+      if (minutes < 0) { minutes = 0; seconds = 0; clearInterval(timerInterval); }
     }
     tick();
     timerInterval = setInterval(tick, 1000);
@@ -214,8 +267,6 @@
 
   function run() {
     init();
-    /* ליד Debug: איפוס scarcity בכל רענון כדי לאפשר לבדוק את אנימציית הגלילה – להסיר כשעוברים ל-production */
-    try { sessionStorage.removeItem(STORAGE_KEY); } catch (e) {}
     try { if (sessionStorage.getItem(STORAGE_KEY) === '1') { returned = true; if (timerWrap) { timerWrap.style.display = 'block'; startTimer(); } } } catch (e) {}
     if (returnBtn) returnBtn.addEventListener('click', hideOverlayAndShowTimer);
     window.addEventListener('scroll', function() { onScroll(); }, { passive: true });
@@ -331,6 +382,9 @@
   html body #sticky-cta-bar a,
   html body #sticky-cta-bar #sticky-cta-btn {
     color: #fff !important;
+  }
+  @media (min-width: 768px) {
+    #sticky-cta-bar #sticky-cta-btn { width: 100%; }
   }
 </style>
 <script>

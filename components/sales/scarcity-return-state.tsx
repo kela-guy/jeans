@@ -8,25 +8,21 @@ import {
 } from "./scarcity-gradient-config"
 
 function ScarcityCountdown() {
-  const [time, setTime] = useState({ hours: 0, minutes: 14, seconds: 59 })
+  const [time, setTime] = useState({ minutes: 5, seconds: 0 })
 
   useEffect(() => {
     const interval = setInterval(() => {
       setTime((prev) => {
-        let { hours, minutes, seconds } = prev
+        let { minutes, seconds } = prev
         seconds--
         if (seconds < 0) {
           seconds = 59
           minutes--
         }
         if (minutes < 0) {
-          minutes = 59
-          hours--
+          return { minutes: 0, seconds: 0 }
         }
-        if (hours < 0) {
-          return { hours: 0, minutes: 0, seconds: 0 }
-        }
-        return { hours, minutes, seconds }
+        return { minutes, seconds }
       })
     }, 1000)
     return () => clearInterval(interval)
@@ -36,14 +32,20 @@ function ScarcityCountdown() {
 
   return (
     <div
-      className="flex flex-col items-center gap-0.5 rounded-xl border border-red-500/30 bg-black/80 px-4 py-2.5 shadow-lg shadow-red-950/20 backdrop-blur-sm"
+      className="flex flex-col items-center gap-1 rounded-xl border border-red-500/30 bg-black/80 px-4 py-3 shadow-lg shadow-red-950/20 backdrop-blur-sm"
       dir="ltr"
     >
-      <span className="text-[10px] font-medium uppercase tracking-wider text-red-400/90">
-        נגמר בעוד
+      <span className="text-[10px] font-medium uppercase tracking-wider text-red-400/90 text-center">
+        הקופון:
+      </span>
+      <span className="font-mono text-xl font-bold tracking-widest text-white">
+        CARE10
+      </span>
+      <span className="text-[10px] text-white/80 text-center">
+        בתוקף עד
       </span>
       <span className="font-mono text-lg font-bold tabular-nums text-red-100">
-        {pad(time.hours)}:{pad(time.minutes)}:{pad(time.seconds)}
+        {pad(time.minutes)}:{pad(time.seconds)}
       </span>
     </div>
   )

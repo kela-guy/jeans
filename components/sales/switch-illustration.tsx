@@ -16,6 +16,12 @@ function lerp(a: number, b: number, t: number) {
 export function SwitchIllustration() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [progress, setProgress] = useState(0)
+  const [manualProgress, setManualProgress] = useState<number | null>(null)
+
+  const effectiveProgress = manualProgress !== null ? manualProgress : progress
+  const handleToggle = useCallback(() => {
+    setManualProgress((prev) => (prev !== null ? (prev >= 0.5 ? 0 : 1) : (effectiveProgress >= 0.5 ? 0 : 1)))
+  }, [effectiveProgress])
 
   const handleScroll = useCallback(() => {
     const el = containerRef.current
@@ -45,11 +51,10 @@ export function SwitchIllustration() {
     }
   }, [handleScroll])
 
-  // Single phase: 0 = OFF state, 1 = ON state
-  // Switch knob moves smoothly with easing
-  const eased = progress < 0.5
-    ? 2 * progress * progress
-    : 1 - Math.pow(-2 * progress + 2, 2) / 2
+  // Single phase: 0 = OFF state, 1 = ON state (use effectiveProgress so click overrides scroll)
+  const eased = effectiveProgress < 0.5
+    ? 2 * effectiveProgress * effectiveProgress
+    : 1 - Math.pow(-2 * effectiveProgress + 2, 2) / 2
 
   // OFF column: fully visible at 0, fades at 1
   const offOpacity = clamp(lerp(1, 0.3, eased), 0, 1)
@@ -69,33 +74,39 @@ export function SwitchIllustration() {
 
   return (
     <div ref={containerRef} className="my-10">
-      {/* Switch in center */}
+      <h2 className="text-center text-2xl font-bold text-orange-500 mb-6 md:text-3xl">
+        כך פועל מתג שריפת השומן:
+      </h2>
+      {/* Switch in center - clickable */}
       <div className="flex justify-center mb-8">
-        <div
-          className="relative h-10 w-20 rounded-full border border-border transition-colors"
+        <button
+          type="button"
+          onClick={handleToggle}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleToggle() } }}
+          className="relative h-10 w-20 rounded-full border border-border transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           style={{ backgroundColor: `hsl(${trackHue},0%,${trackLight}%)` }}
+          aria-label={effectiveProgress >= 0.5 ? "המתג דולק - לחצי לכיבוי" : "המתג כבוי - לחצי להדלקה"}
         >
           <div
-            className="absolute top-1 h-7 w-7 rounded-full shadow-sm"
+            className="absolute top-1 h-7 w-7 rounded-full shadow-sm transition-[right,background-color] duration-200 ease-out"
             style={{
               backgroundColor: `hsl(0,0%,${knobLight}%)`,
               right: `${lerp(6, 58, eased)}%`,
-              transition: "none",
             }}
           />
           <span
-            className="absolute left-2 top-1/2 -translate-y-1/2 text-[9px] font-bold uppercase tracking-wide"
+            className="absolute left-2 top-1/2 -translate-y-1/2 text-[9px] font-bold uppercase tracking-wide pointer-events-none"
             style={{ color: `hsl(0,0%,${lerp(55, 75, eased)}%)` }}
           >
             OFF
           </span>
           <span
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-bold uppercase tracking-wide"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-bold uppercase tracking-wide pointer-events-none"
             style={{ color: `hsl(0,0%,${lerp(35, 96, eased)}%)` }}
           >
             ON
           </span>
-        </div>
+        </button>
       </div>
 
       {/* Two columns side by side -- always visible, crossfade emphasis */}
@@ -106,25 +117,25 @@ export function SwitchIllustration() {
           style={{
             opacity: offOpacity,
             transform: `scale(${offScale})`,
-            backgroundColor: `hsl(0, 0%, ${lerp(95, 97, eased)}%)`,
+            backgroundColor: `hsl(0, 0%, ${lerp(92, 96, eased)}%)`,
           }}
         >
-          <p className="mb-1 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          <p className="mb-1 text-xs font-semibold tracking-wide uppercase text-foreground">
             {"כשהמתג כבוי"}
           </p>
-          <p className="mb-4 text-[11px] text-muted-foreground">
+          <p className="mb-4 text-[11px] font-medium text-foreground/90">
             {"אינסולין לא מאוזן"}
           </p>
           <div className="flex flex-col gap-2">
             {OFF_ITEMS.map((item, i) => (
               <div key={i} className="flex items-center justify-center gap-1.5">
-                <span className="text-xs text-muted-foreground">{"✕"}</span>
-                <span className="text-sm text-muted-foreground">{item}</span>
+                <span className="text-xs text-foreground/80">{"✕"}</span>
+                <span className="text-sm font-medium text-foreground">{item}</span>
               </div>
             ))}
           </div>
           <p
-            className="mt-4 text-xs leading-relaxed text-muted-foreground"
+            className="mt-4 text-xs leading-relaxed text-foreground/85"
             style={{ opacity: offOpacity }}
           >
             {"הגוף אוגר שומן ומתכונן למצבי סטרס"}
@@ -137,19 +148,19 @@ export function SwitchIllustration() {
           style={{
             opacity: onOpacity,
             transform: `scale(${onScale})`,
-            backgroundColor: `hsl(0, 0%, ${lerp(97, 8, eased)}%)`,
-            borderColor: `hsl(0, 0%, ${lerp(90, 20, eased)}%)`,
+            backgroundColor: `hsl(0, 0%, ${lerp(96, 6, eased)}%)`,
+            borderColor: `hsl(0, 0%, ${lerp(88, 18, eased)}%)`,
           }}
         >
           <p
             className="mb-1 text-xs font-semibold tracking-wide uppercase"
-            style={{ color: `hsl(0, 0%, ${lerp(55, 85, eased)}%)` }}
+            style={{ color: `hsl(0, 0%, ${lerp(45, 98, eased)}%)` }}
           >
             {"כשהמתג דולק"}
           </p>
           <p
-            className="mb-4 text-[11px]"
-            style={{ color: `hsl(0, 0%, ${lerp(55, 70, eased)}%)` }}
+            className="mb-4 text-[11px] font-medium"
+            style={{ color: `hsl(0, 0%, ${lerp(45, 95, eased)}%)` }}
           >
             {"אינסולין מאוזן"}
           </p>
@@ -158,13 +169,13 @@ export function SwitchIllustration() {
               <div key={i} className="flex items-center justify-center gap-1.5">
                 <span
                   className="text-xs"
-                  style={{ color: `hsl(0, 0%, ${lerp(55, 85, eased)}%)` }}
+                  style={{ color: `hsl(0, 0%, ${lerp(45, 98, eased)}%)` }}
                 >
                   {"✓"}
                 </span>
                 <span
                   className="text-sm font-medium"
-                  style={{ color: `hsl(0, 0%, ${lerp(55, 92, eased)}%)` }}
+                  style={{ color: `hsl(0, 0%, ${lerp(45, 98, eased)}%)` }}
                 >
                   {item}
                 </span>
@@ -174,11 +185,11 @@ export function SwitchIllustration() {
           <p
             className="mt-4 text-xs leading-relaxed"
             style={{
-              color: `hsl(0, 0%, ${lerp(55, 90, eased)}%)`,
+              color: `hsl(0, 0%, ${lerp(45, 96, eased)}%)`,
               opacity: onOpacity,
             }}
           >
-            {"הגוף שורף שומן כמו מכונה"}
+            {"הגוף שורף שומן ומשתמש בו לאנרגיה זמינה לגוף"}
           </p>
         </div>
       </div>

@@ -59,6 +59,32 @@ function renderWithHighlights(visible: string, ranges: [number, number][]): Reac
   return out.length === 1 ? out[0] : <>{out}</>
 }
 
+/** Character indices at which to play typing sound (e.g. 2 per word: start + middle) */
+function getSoundIndices(text: string, soundsPerWord: number): Set<number> {
+  const set = new Set<number>()
+  if (soundsPerWord <= 0) return set
+  let wordStart = -1
+  for (let i = 0; i <= text.length; i++) {
+    const isWordChar = i < text.length && !/[\s\n]/.test(text[i])
+    if (isWordChar) {
+      if (wordStart === -1) wordStart = i
+    } else {
+      if (wordStart !== -1) {
+        const wordLen = i - wordStart
+        set.add(wordStart)
+        if (soundsPerWord > 1 && wordLen > 1) set.add(wordStart + Math.ceil(wordLen / 2))
+        wordStart = -1
+      }
+    }
+  }
+  if (wordStart !== -1) {
+    const wordLen = text.length - wordStart
+    set.add(wordStart)
+    if (soundsPerWord > 1 && wordLen > 1) set.add(wordStart + Math.ceil(wordLen / 2))
+  }
+  return set
+}
+
 type TypingRevealProps = {
   text: string
   className?: string
@@ -70,6 +96,8 @@ type TypingRevealProps = {
   delayScale?: number
   /** Phrases to highlight with .marker (substrings of text) */
   highlightPhrases?: string[]
+  /** If set (e.g. 2), only play this many typing sounds per word (text still reveals char-by-char) */
+  soundsPerWord?: number
 }
 
 export function TypingReveal({
@@ -81,12 +109,18 @@ export function TypingReveal({
   onComplete,
   delayScale = 1,
   highlightPhrases,
+  soundsPerWord,
 }: TypingRevealProps) {
   const [visibleLength, setVisibleLength] = useState(0)
   const [hasStarted, setHasStarted] = useState(false)
   const [hasFinished, setHasFinished] = useState(false)
   const onCompleteRef = useRef(onComplete)
   onCompleteRef.current = onComplete
+
+  const soundIndices = useMemo(
+    () => (soundsPerWord != null && soundsPerWord > 0 ? getSoundIndices(text, soundsPerWord) : null),
+    [text, soundsPerWord]
+  )
 
   const highlightRanges = useMemo(
     () => (highlightPhrases?.length ? getHighlightRanges(text, highlightPhrases) : []),
@@ -110,12 +144,14 @@ export function TypingReveal({
     const delay = Math.round(getDelayForChar(charToReveal) * delayScale)
 
     const t = setTimeout(() => {
-      playTypingTap()
+      if (soundIndices === null || soundIndices.has(visibleLength)) {
+        playTypingTap()
+      }
       setVisibleLength((n) => Math.min(n + 1, text.length))
     }, delay)
 
     return () => clearTimeout(t)
-  }, [hasStarted, visibleLength, text])
+  }, [hasStarted, visibleLength, text, delayScale, soundIndices])
 
   const visible = text.slice(0, visibleLength)
   const content = highlightRanges.length > 0 ? renderWithHighlights(visible, highlightRanges) : visible

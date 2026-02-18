@@ -1,3 +1,6 @@
+import { TestimonialImage } from "./testimonial-image"
+import { TESTIMONIALS, TESTIMONIAL_INDEX } from "@/lib/testimonials"
+
 export function PricingSection() {
   return (
     <section className="py-10" id="pricing">
@@ -57,6 +60,10 @@ export function PricingSection() {
         <p className="mt-3 text-center text-xs font-medium text-muted-foreground">
           {"החזר כספי אם לא תראי תוצאות – ביטול פשוט"}
         </p>
+      </div>
+
+      <div className="mt-10">
+        <TestimonialImage {...TESTIMONIALS[TESTIMONIAL_INDEX.pricing]} />
       </div>
     </section>
   )

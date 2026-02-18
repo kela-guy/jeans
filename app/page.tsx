@@ -8,6 +8,7 @@ import { OfferSection } from "@/components/sales/offer-section"
 import { Closing21DaysSection } from "@/components/sales/closing-21-days-section"
 import { PricingSection } from "@/components/sales/pricing-section"
 import { HowItWorksSection } from "@/components/sales/how-it-works-section"
+import { TestimonialBlock } from "@/components/sales/testimonial-block"
 import { ObjectionSection } from "@/components/sales/objection-section"
 import { AboutSection } from "@/components/sales/about-section"
 import { StickyCta } from "@/components/sales/sticky-cta"
@@ -37,6 +38,8 @@ export default function Page() {
         <PricingSection />
 
         <HowItWorksSection />
+
+        <TestimonialBlock />
 
         <ObjectionSection />
 

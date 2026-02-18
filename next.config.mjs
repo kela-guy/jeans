@@ -3,6 +3,15 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.stayyoung.live',
+        pathname: '/wp-content/uploads/**',
+      },
+    ],
+  },
   async headers() {
     return [
       {
