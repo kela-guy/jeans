@@ -174,15 +174,17 @@
 
 <script>
 (function() {
-  var SCROLL_THRESHOLD = 0.9;
-  var STICKY_CTA_SCROLL = 600;
+  var SCROLL_THRESHOLD = 0.95;
+  var TIME_ON_PAGE_MS = 7 * 60 * 1000;
+  var STICKY_CTA_SCROLL_THRESHOLD = 0.3;
+  var stickyCtaShown = false;
   var HEADLINE_ONLY_MS = 2000;
   var CONTENT_FADE_DELAY_MS = 400;
   var TIMER_START_MINUTES = 5;
   var TIMER_START_SECONDS = 0;
-  var STORAGE_KEY = 'scarcityReturned';
 
   var overlay, overlayContent, headlineOnly, restContent, returnBtn, timerWrap, timerDisplay, stickyCta;
+  var overlayTriggered = false;
 
   function init() {
     overlay = document.getElementById('scarcity-overlay');
@@ -206,7 +208,8 @@
   }
 
   function showOverlay() {
-    if (overlayShown || !overlay) return;
+    if (overlayShown || overlayTriggered || !overlay) return;
+    overlayTriggered = true;
     overlayShown = true;
     overlay.style.display = 'block';
     document.body.style.overflow = 'hidden';
@@ -234,7 +237,6 @@
     setTimeout(function() {
       overlay.style.display = 'none';
       document.body.style.overflow = '';
-      try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
       returned = true;
       if (timerWrap) timerWrap.style.display = 'block';
       startTimer();
@@ -258,19 +260,20 @@
 
   function onScroll() {
     if (!returned && getScrollProgress() >= SCROLL_THRESHOLD) showOverlay();
-    if (stickyCta) {
-      var y = window.pageYOffset || document.documentElement.scrollTop;
-      if (y > STICKY_CTA_SCROLL) stickyCta.classList.remove('sticky-cta-hidden');
-      else stickyCta.classList.add('sticky-cta-hidden');
+    if (stickyCta && !stickyCtaShown) {
+      if (getScrollProgress() >= STICKY_CTA_SCROLL_THRESHOLD) {
+        stickyCtaShown = true;
+        stickyCta.classList.remove('sticky-cta-hidden');
+      }
     }
   }
 
   function run() {
     init();
-    try { if (sessionStorage.getItem(STORAGE_KEY) === '1') { returned = true; if (timerWrap) { timerWrap.style.display = 'block'; startTimer(); } } } catch (e) {}
     if (returnBtn) returnBtn.addEventListener('click', hideOverlayAndShowTimer);
     window.addEventListener('scroll', function() { onScroll(); }, { passive: true });
     onScroll();
+    setTimeout(showOverlay, TIME_ON_PAGE_MS);
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', run);

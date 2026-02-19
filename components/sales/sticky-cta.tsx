@@ -1,16 +1,23 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
+
+const SCROLL_SHOW_THRESHOLD = 0.3
 
 export function StickyCta() {
   const [visible, setVisible] = useState(false)
+  const hasShownRef = useRef(false)
 
   useEffect(() => {
     const handleScroll = () => {
+      if (hasShownRef.current) return
       const scrollTop = window.scrollY
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
-      const threshold = scrollHeight * 0.3
-      setVisible(scrollHeight > 0 && scrollTop >= threshold)
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const progress = docHeight > 0 ? scrollTop / docHeight : 0
+      if (progress >= SCROLL_SHOW_THRESHOLD) {
+        hasShownRef.current = true
+        setVisible(true)
+      }
     }
     handleScroll()
     window.addEventListener("scroll", handleScroll, { passive: true })

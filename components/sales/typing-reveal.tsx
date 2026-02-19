@@ -14,8 +14,8 @@ function getDelayForChar(char: string): number {
   return 22 + Math.random() * 28
 }
 
-/** [start, end] character indices (end exclusive) */
-function getHighlightRanges(text: string, phrases: string[]): [number, number][] {
+/** [start, end] character indices (end exclusive). Exported for static render (e.g. scroll phase). */
+export function getHighlightRanges(text: string, phrases: string[]): [number, number][] {
   const ranges: [number, number][] = []
   for (const phrase of phrases) {
     let idx = 0
@@ -38,7 +38,8 @@ function getHighlightRanges(text: string, phrases: string[]): [number, number][]
   return merged
 }
 
-function renderWithHighlights(visible: string, ranges: [number, number][]): React.ReactNode {
+/** Render text with .marker spans for given ranges. Exported for static render (e.g. scroll phase). */
+export function renderWithHighlights(visible: string, ranges: [number, number][]): React.ReactNode {
   if (ranges.length === 0) return visible
   const len = visible.length
   const out: React.ReactNode[] = []

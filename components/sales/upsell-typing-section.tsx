@@ -1,11 +1,15 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { getTypingDurationSec } from "@/lib/typing-duration-config"
-import { TypingReveal } from "./typing-reveal"
+import { TypingReveal, getHighlightRanges, renderWithHighlights } from "./typing-reveal"
+import { Button } from "@/components/ui/button"
 
 const INITIAL_DELAY_MS = 5000
-const AVG_MS_PER_CHAR = 50 // rough average from getDelayForChar (letters, spaces, punctuation)
+const LINE_DISPLAY_MS = 1000
+const SPACER_DELAY_MS = 600
+const SKIP_BUTTON_DELAY_MS = 11000
+const AVG_MS_PER_CHAR = 50
 
 const HEADLINE = "text-4xl font-black tracking-tight text-foreground md:text-5xl lg:text-6xl"
 const SUBHEAD = "text-xl font-bold leading-snug text-foreground md:text-2xl"
@@ -18,8 +22,11 @@ type TypingBlock = { text: string; className: string; highlightPhrases?: string[
 type SpacerBlock = { spacer: true; className?: string }
 type BlockItem = TypingBlock | SpacerBlock
 
+const PERSONAL_MESSAGE = "text-3xl font-black tracking-tight text-foreground md:text-4xl lg:text-5xl"
+
 const BLOCKS: BlockItem[] = [
   { text: "חכי….", className: HEADLINE },
+  { text: "יש לך מסר אישי מאביב", className: PERSONAL_MESSAGE },
   { text: "נפתחה בפנייך ברגע זה הזדמנות", className: SUBHEAD },
   { text: "לקבל הדרכה חד פעמית", className: PUNCH, highlightPhrases: ["הדרכה חד פעמית"] },
   { text: "אבל היא לא לכל אחת", className: EMPHASIS, highlightPhrases: ["לא לכל אחת"] },
@@ -52,6 +59,7 @@ const BLOCKS: BlockItem[] = [
   { text: "זו לא הדרכה שמתאימה לכל אחת ולכן זה רק במעמד הזה.", className: EMPHASIS, highlightPhrases: ["רק במעמד הזה"] },
   { spacer: true, className: "h-10" },
   { text: "יש לך אפשרות לשים עליה יד עכשיו\nולקבל את ההדרכה באימייל תוך 3 דקות.", className: PUNCH + " whitespace-pre-line", highlightPhrases: ["תוך 3 דקות"] },
+  { text: "מרגע הלחיצה על הכפתור את תרכשי מיד את ההדרכה של ״אפקט הוואו״ ב87 ש״ח בלבד.", className: BODY },
 ]
 
 const totalChars = BLOCKS.reduce(
@@ -60,9 +68,17 @@ const totalChars = BLOCKS.reduce(
 )
 const naturalDurationMs = totalChars * AVG_MS_PER_CHAR
 
+function StaticBlock({ block }: { block: TypingBlock }) {
+  const ranges = getHighlightRanges(block.text, block.highlightPhrases ?? [])
+  const content = ranges.length > 0 ? renderWithHighlights(block.text, ranges) : block.text
+  return <p className={block.className}>{content}</p>
+}
+
 export function UpsellTypingSection() {
+  const [phase, setPhase] = useState<"typing" | "scroll">("typing")
   const [typingStarted, setTypingStarted] = useState(false)
-  const [currentBlock, setCurrentBlock] = useState(0)
+  const [currentBlockIndex, setCurrentBlockIndex] = useState(0)
+  const [showSkipButton, setShowSkipButton] = useState(false)
   const [durationSec, setDurationSec] = useState(90)
 
   useEffect(() => {
@@ -77,31 +93,81 @@ export function UpsellTypingSection() {
     return () => clearTimeout(t)
   }, [])
 
-  let typingBlockIndex = 0
+  useEffect(() => {
+    const t = setTimeout(() => setShowSkipButton(true), SKIP_BUTTON_DELAY_MS)
+    return () => clearTimeout(t)
+  }, [])
+
+  useEffect(() => {
+    if (phase === "typing" && currentBlockIndex >= BLOCKS.length) {
+      setPhase("scroll")
+    }
+  }, [phase, currentBlockIndex])
+
+  const advanceToNext = useCallback(() => {
+    setCurrentBlockIndex((prev) => prev + 1)
+  }, [])
+
+  const handleTypingComplete = useCallback(() => {
+    setTimeout(advanceToNext, LINE_DISPLAY_MS)
+  }, [advanceToNext])
+
+  const currentBlock = phase === "typing" && currentBlockIndex < BLOCKS.length ? BLOCKS[currentBlockIndex] : null
+  const isSpacer = currentBlock && "spacer" in currentBlock && currentBlock.spacer
+
+  useEffect(() => {
+    if (phase !== "typing" || !currentBlock || !isSpacer) return
+    const t = setTimeout(advanceToNext, SPACER_DELAY_MS)
+    return () => clearTimeout(t)
+  }, [phase, currentBlockIndex, currentBlock, isSpacer, advanceToNext])
+
+  if (phase === "scroll") {
+    return (
+      <section className="flex flex-col gap-6 py-6">
+        <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground">
+          {"מסר מאביב..."}
+        </p>
+        {BLOCKS.map((block, index) => {
+          if ("spacer" in block && block.spacer) {
+            return <div key={index} className={block.className ?? "h-10"} aria-hidden />
+          }
+          return <StaticBlock key={index} block={block as TypingBlock} />
+        })}
+      </section>
+    )
+  }
+
   return (
-    <section className="flex flex-col gap-6 py-6">
+    <section className="flex min-h-[70vh] flex-col items-center justify-center py-6 text-center">
       <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground">
-        {"ההצעה"}
+        {"מסר מאביב..."}
       </p>
-      {BLOCKS.map((block, index) => {
-        if ("spacer" in block && block.spacer) {
-          return <div key={index} className={block.className ?? "h-10"} aria-hidden />
-        }
-        const typingBlock = block as TypingBlock
-        const typingIndex = typingBlockIndex++
-        return (
-          <TypingReveal
-            key={index}
-            text={typingBlock.text}
-            className={typingBlock.className}
-            startTrigger={typingStarted && currentBlock === typingIndex}
-            onComplete={() => setCurrentBlock((i) => i + 1)}
-            delayScale={delayScale}
-            highlightPhrases={typingBlock.highlightPhrases}
-            soundsPerWord={2}
-          />
-        )
-      })}
+      <div className="flex w-full flex-1 flex-col items-center justify-center">
+        <div className="-mt-[60px] flex min-h-[180px] w-full flex-col items-center justify-center">
+          {currentBlock && !isSpacer && (
+            <TypingReveal
+              key={currentBlockIndex}
+              text={(currentBlock as TypingBlock).text}
+              className={(currentBlock as TypingBlock).className}
+              startTrigger={typingStarted}
+              onComplete={handleTypingComplete}
+              delayScale={delayScale}
+              highlightPhrases={(currentBlock as TypingBlock).highlightPhrases}
+              soundsPerWord={2}
+            />
+          )}
+        </div>
+        {showSkipButton && (
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => setPhase("scroll")}
+            className="mt-10 scale-[0.66] rounded-lg border-border bg-background/95 px-6 py-3 text-base font-semibold shadow-lg backdrop-blur-sm hover:bg-muted/80"
+          >
+            דלגי
+          </Button>
+        )}
+      </div>
     </section>
   )
 }

@@ -1,10 +1,11 @@
 "use client"
 
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
-const SCROLL_THRESHOLD = 0.9
+const SCROLL_THRESHOLD = 0.95
+const TIME_ON_PAGE_MS = 7 * 60 * 1000
 const HEADLINE_ONLY_MS = 2000
 const CONTENT_FADE_DELAY_MS = 400
 
@@ -19,18 +20,21 @@ export function ScarcityOverlay({
   const [maskVisible, setMaskVisible] = useState(false)
   const [contentVisible, setContentVisible] = useState(false)
   const [restVisible, setRestVisible] = useState(false)
+  const triggeredRef = useRef(false)
 
   const triggerShow = useCallback(() => {
+    if (triggeredRef.current || returned) return
+    triggeredRef.current = true
     setShowOverlay(true)
     requestAnimationFrame(() => {
       requestAnimationFrame(() => setMaskVisible(true))
     })
     setTimeout(() => setContentVisible(true), CONTENT_FADE_DELAY_MS)
     setTimeout(() => setRestVisible(true), CONTENT_FADE_DELAY_MS + HEADLINE_ONLY_MS)
-  }, [])
+  }, [returned])
 
   const checkScroll = useCallback(() => {
-    if (typeof window === "undefined" || returned) return
+    if (typeof window === "undefined" || returned || triggeredRef.current) return
 
     const scrollTop = window.scrollY
     const docHeight = document.documentElement.scrollHeight - window.innerHeight
@@ -46,6 +50,12 @@ export function ScarcityOverlay({
     window.addEventListener("scroll", checkScroll, { passive: true })
     return () => window.removeEventListener("scroll", checkScroll)
   }, [checkScroll])
+
+  useEffect(() => {
+    if (returned || triggeredRef.current) return
+    const timer = setTimeout(triggerShow, TIME_ON_PAGE_MS)
+    return () => clearTimeout(timer)
+  }, [returned, triggerShow])
 
   const handleReturn = () => {
     setContentVisible(false)
